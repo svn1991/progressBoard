@@ -1,0 +1,20 @@
+{
+  "name": "progressboard",
+  "version": "1.0.0",
+  "description": "Project planning application",
+  "main": "index.js",
+  "scripts": {
+    "start": "json-server --watch public/assets/db.json",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/svn1991/progressBoard.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/svn1991/progressBoard/issues"
+  },
+  "homepage": "https://github.com/svn1991/progressBoard#readme"
+}
