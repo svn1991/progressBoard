@@ -106,20 +106,36 @@ const categoriesContainer = document.getElementById('categories-container');
 /**
  * Execute: Get categories data and start creating cards
  */
-getCategoriesData()
-.then(function(categoriesInfo) {
-  if (categoriesInfo.length > 0) {
-    categoriesData = categoriesInfo;
-    createCategories(categoriesData);
-    loadCards();
-  } else {
-    throw 'Please check categories information in database'
-  }
+function loadCategories() {
+  return getCategoriesData()
+  .then(function(categoriesInfo) {
+    if (categoriesInfo.length > 0) {
+      categoriesData = categoriesInfo;
+      createCategories(categoriesData);
+      loadCards()
+      .then(function(msg){
+        return msg;
+      })
+      .fail(function(err) {
+        return err;
+      });;
+    } else {
+      throw 'Please check categories information in database'
+    }
+  })
+  .fail(function (err) {
+    categoriesContainer.innerHTML = 
+    `
+      <div> Sorry, categories cant be loaded. Please contact administrator. </div>
+    `;
+    return err;
+  });
+}
+
+loadCategories()
+.then(function(msg){
+  console.log(msg);
 })
-.fail(function (err) {
-  categoriesContainer.innerHTML = 
-  `
-    <div> Sorry, categories cant be loaded. Please contact administrator. </div>
-  `;
+.fail(function(err) {
   console.log(err);
-})
+});

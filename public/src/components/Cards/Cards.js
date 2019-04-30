@@ -38,16 +38,17 @@ function createCards(cards) {
  * Execute: Load cards data
  */
 function loadCards() {
-  getCardsData()
+  return getCardsData()
   .then(function(cardsInfo) {
     if (cardsInfo.length > 0) {
       cardDetails = cardsInfo;
       createCards(cardDetails);
+      return 'Successfully loaded cards'
     } else {
       throw 'Please check cards information in database'
     }
   })
   .fail(function (err) {
-    console.log(err);
+    return err;
   });
 }

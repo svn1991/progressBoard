@@ -33,3 +33,30 @@ function getCardsData() {
     }
   });
 }
+
+/**
+ * Get card object which can be pushed into the database
+ * @param {object} newCardInfo 
+ * @return {object} card info object which has same format as database
+ */
+function addCardToDatabase(newCardInfo) {
+  return $.ajax({
+    type: 'POST',
+    url: '/cards',
+    data: JSON.stringify(newCardInfo),
+    contentType: "application/json",
+    dataType: "json",
+    success: function(data) {
+      return loadCards()
+      .then(function(msg){
+        return newCardInfo + 'added successfully';
+      })
+      .fail(function(err) {
+        return err;
+      });
+    },
+    error: function( data ) {
+      return data
+    }
+  });
+}
