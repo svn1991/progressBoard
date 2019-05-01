@@ -1,4 +1,7 @@
 {
+  "projectDetails": {
+    "title": "Test Project 1"
+  },
   "columns": [
     {
       "id": 1,

@@ -1,0 +1,177 @@
+.cards-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card-element {
+  margin: 0 10px 10px;
+  padding: 10px;
+  box-shadow: 1px 1px 1px 0px #f9537d;
+  border: 1px solid #f9537d;
+  background-color: #f9537d;
+  border-top: none;
+  border-radius: 3px;
+  flex-grow: 1;
+  width: 100%;
+}
+
+.card-header {
+  display: inline-block;
+  width: 100%;
+}
+
+.card-title {
+  font-weight: bold;
+  font-size: 1.2em;
+  margin-bottom: 5px;
+  color: #ffffff;
+  float: left;
+  max-width: 85%;
+}
+
+.card-edit-wrapper {
+  float: right;
+  margin: 1px 10px 0 0;
+  font-size: 1.1em;
+}
+
+.card-element .icons.fas.fa-trash {
+  color: #000000;
+}
+
+.card-element .icons.fas.fa-trash:hover {
+  color: #880b1c;
+}
+
+.card-element .icons.fas.fa-trash:active {
+  color: #057214;
+}
+
+.card-description {
+  margin-top: 10px;
+}
+
+.card-element .card-description {
+  max-height: 0;
+  overflow: hidden;
+}
+
+/*  STYLING FOR CARD WITH INPUTS   */
+.add-card-button {
+  display: flex;
+  justify-content: center;
+  margin: 0 10px 10px 10px;
+  padding: 10px;
+  background-color: #e1e1e1;
+  border-radius: 3px;
+  flex-grow: 1;
+  order: 1;
+}
+
+.add-card-button:hover {
+  background-color: #37b648;
+  color: #ffffff;
+}
+
+.add-card-button.editing-card:hover {
+  background-color: #c5c5c5;
+  color: unset;
+}
+
+.add-card-wrapper .card-title {
+  max-width: 100%;
+}
+
+.add-card-wrapper input, .add-card-wrapper textarea {
+  width: 100%;
+  border: none;
+  box-shadow: 0px 1px 2px 0px #b6b6b6;
+  border-radius: 3px;
+  display: block;
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.add-card-wrapper input {
+  height: 30px;
+  box-sizing: border-box;
+  padding: 2px 0 0 5px;;
+}
+
+.add-card-wrapper .card-description {
+  margin: 0;
+}
+
+.add-card-wrapper textarea {
+  height: 200px;
+  resize: none;
+  outline-color: #6cb6ff;
+  box-sizing: border-box;
+  padding: 2px 5px;
+}
+
+.add-card-wrapper .card-save-wrapper {
+  margin: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+}
+
+.add-card-wrapper .card-save-wrapper>div {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-card-wrapper .card-save-wrapper>div:first-child {  
+  margin-right: 20px;
+}
+
+.add-card-wrapper .card-save-action-button {
+  width: 45px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  color: #ffffff;
+  outline: none;
+}
+
+.add-card-wrapper .save-card {
+  background-color: #61ff61;
+  font-size: 1.8em;
+  padding: 0;
+  box-shadow: 0px 2px 0px 1px #009700;
+}
+
+.add-card-wrapper .save-card:hover {
+  background-color: #0ad90a;
+}
+
+.add-card-wrapper .save-card:active {
+  background-color: #009700;
+  box-shadow: none;
+  height: 47px;
+  width: 47px;
+}
+
+.add-card-wrapper .discard-card {
+  background-color: #fe5a78;
+  font-size: 1.6em;
+  box-shadow: 0px 2px 0px 1px #d90a30;
+}
+
+.add-card-wrapper .discard-card:hover {
+  background-color: #ff002f;
+}
+
+.add-card-wrapper .discard-card:active {
+  background-color: #ea2e51;
+  box-shadow: none;
+  height: 47px;
+  width: 47px;
+}

@@ -1,0 +1,22 @@
+#progress-categories-wrapper {
+  padding: 10px 20px;
+}
+
+#categories-container {
+  display: flex;
+}
+
+.category-element {
+  width: 250px;
+  min-height: 300px;
+  box-shadow: 0px 2px 5px 0px #b0b0b5;
+  background-color: #fefefe;
+  margin-right: 20px;
+  border-radius: 5px;
+  display: inline-table;
+}
+
+.category-title {
+  padding: 20px 10px 20px 13px;
+   font-size: 1.5em;
+}

@@ -21,10 +21,10 @@ This page contains description and requirements for a Front-End assignment on [W
    - Each column is defined by a title and the cards it contains,
    - Each card is defined by a mandatory title, an optional description and the column that it belongs to.
 5. The user should be able to:
-   - display all columns with all cards,
-   - create a new card,
+   - display all columns with all cards :heavy_check_mark:,
+   - create a new card :heavy_check_mark:,
    - modify a card,
-   - delete a card,
+   - delete a card :heavy_check_mark:,
    - add a column,
    - modify a column,
    - delete a column,
