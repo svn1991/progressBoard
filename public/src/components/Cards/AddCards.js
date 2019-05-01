@@ -28,9 +28,7 @@ function addCardButtonClicked(categoryIndex, event) {
  * @param {object} formData form data
  */
 function addNewCardInfo(formData) {
-  const cardData = {
-    id: cardDetails.length + 1
-  };
+  const cardData = {};
   formData.forEach(data => {
     switch (data.name) {
       case 'title':
@@ -66,7 +64,7 @@ function setListenerForSavingNewCard(formElement) {
           return addCardToDatabase(formattedData)
           .then(function(msg){
             console.log(msg);
-            return loadCards()
+            return loadCards('newCardAdded')
             .then(function(msg){
               resetEditCard();
               console.log(msg);
