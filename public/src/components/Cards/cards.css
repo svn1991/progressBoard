@@ -12,6 +12,7 @@
   border-top: none;
   border-radius: 3px;
   flex-grow: 1;
+  width: 100%;
 }
 
 .card-header {

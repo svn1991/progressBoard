@@ -4,6 +4,10 @@ let cardDetails = {};
  * Return individual card elements
  */
 function getCardElement(card) {
+  if ($(".card-element#card-id-" + card.id).length > 0) {
+    return false;
+  }
+  
   let cardTemplate = document.createElement('div');
   cardTemplate.id = "card-id-" + card.id;
   cardTemplate.dataset['categoryId'] = card.columnId;
@@ -27,6 +31,9 @@ function getCardElement(card) {
 function createCards(cards) {
   for (let i=0; i<cards.length; i++) {
     let cardElement = getCardElement(cards[i]);
+    if (!cardElement) {
+      continue;
+    }
     let cardCategoryId = "cards-category-"+cards[i].columnId;
     let categoryElement = document.getElementById(cardCategoryId);
 

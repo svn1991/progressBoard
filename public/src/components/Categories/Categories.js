@@ -112,7 +112,7 @@ function loadCategories() {
     if (categoriesInfo.length > 0) {
       categoriesData = categoriesInfo;
       createCategories(categoriesData);
-      loadCards()
+      return loadCards()
       .then(function(msg){
         return msg;
       })

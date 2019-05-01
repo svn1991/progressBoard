@@ -46,17 +46,11 @@ function addCardToDatabase(newCardInfo) {
     data: JSON.stringify(newCardInfo),
     contentType: "application/json",
     dataType: "json",
-    success: function(data) {
-      return loadCards()
-      .then(function(msg){
-        return newCardInfo + 'added successfully';
-      })
-      .fail(function(err) {
-        return err;
-      });
+    success: function() {
+      return newCardInfo + ' data sent to database successfully';
     },
-    error: function( data ) {
-      return data
+    error: function(err) {
+      return err + 'ajax failing'
     }
   });
 }

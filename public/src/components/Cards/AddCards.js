@@ -1,4 +1,9 @@
 /**
+ * Flag to ensure 1 data object -> 1 data call in case of double clicking submit
+ */
+let newCardSaving = false;
+
+/**
  * Add card button is clicked
  * @param {number} categoryIndex 
  * @param {object} element
@@ -45,6 +50,72 @@ function addNewCardInfo(formData) {
 }
 
 /**
+ * Listener added when new card information is submitted
+ * @param {object} formElement form element related to saving new card info
+ */
+function setListenerForSavingNewCard(formElement) {
+  if (formElement) {
+    formElement.addEventListener(
+      'submit',
+      function _saveCard(event) {
+        event.preventDefault();
+        let formData = $('#save-card-form') ? $('#save-card-form').serializeArray() : [];
+        let formattedData = addNewCardInfo(formData);
+        if (!newCardSaving) {
+          newCardSaving = true;
+          return addCardToDatabase(formattedData)
+          .then(function(msg){
+            console.log(msg);
+            return loadCards()
+            .then(function(msg){
+              resetEditCard();
+              console.log(msg);
+            })
+            .fail(function(err) {
+              console.log(err);
+            });
+          })
+          .fail(function(err) {
+            console.log(err);
+          })
+          .always(function() {
+            newCardSaving = false;
+          });
+        } 
+        console.log('newcardsaving is true')       
+        return false;
+      }
+    );
+  }
+}
+
+/**
+ * Listener added when new card information is discarded
+ * @param {object} element discard new card info "button"
+ */
+function setListenerForDiscardingNewCard(element) {
+  if (element) {
+    element.addEventListener(
+      'click', 
+      resetEditCard
+    );
+  }
+}
+
+/**
+ * Reset add card element to minimize
+ */
+function resetEditCard () {
+  let editingCard = document.getElementsByClassName('editing-card')[0];
+  if (editingCard) {
+    editingCard.classList.remove('editing-card');
+    editingCard.firstElementChild.classList.remove('hidden');
+    editingCard.lastElementChild.innerHTML = "";
+    editingCard.lastElementChild.classList.add('hidden');
+  }
+}
+
+/**
  * Get element template for creating new card
  * @param {index} cardIndex card id in database
  * @param {index} categoryIndex column id in database
@@ -82,41 +153,9 @@ function addCard(cardIndex, categoryIndex) {
       </div>
     </form>      
   `;
-  
-  editDiv.getElementsByTagName('form')[0].addEventListener(
-    'submit',
-    function _saveCard(event) {
-      event.preventDefault();
-      let formData = $('#save-card-form') ? $('#save-card-form').serializeArray() : [];
-      let formattedData = addNewCardInfo(formData);
-      addCardToDatabase(formattedData)
-      .then(function(msg){
-        console.log(msg);
-        loadCards()
-        .then(function(msg){
-          console.log(msg);
-        })
-        .fail(function(err) {
-          console.log(err);
-        });
-      })
-      .fail(function(err) {
-        console.log(err);
-      });;
-      return false;
-    }
-  );
-  
-  editDiv.getElementsByClassName('discard-card')[0].addEventListener(
-    'click', 
-    function _discardCard(event){
-      let editingCard = document.getElementsByClassName('editing-card')[0];
-      editingCard.classList.remove('editing-card');
-      editingCard.firstElementChild.classList.remove('hidden');
-      editingCard.lastElementChild.innerHTML = "";
-      editingCard.lastElementChild.classList.add('hidden');
-    }
-  );
+
+  setListenerForSavingNewCard(editDiv.getElementsByTagName('form')[0]);
+  setListenerForDiscardingNewCard(editDiv.getElementsByClassName('discard-card')[0]);
 
   return editDiv;
 }
