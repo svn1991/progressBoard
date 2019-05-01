@@ -54,3 +54,20 @@ function addCardToDatabase(newCardInfo) {
     }
   });
 }
+
+/**
+ * Delete card object based on its id
+ * @param {number} cardId
+ */
+function deleteCard(cardId) {
+  return $.ajax({
+    type: 'DELETE',
+    url: '/cards/'+cardId,
+    success: function() {
+      return cardId + ' deleted';
+    },
+    error: function(err) {
+      return err + 'unable to delete card'
+    }
+  });
+}
