@@ -9,16 +9,25 @@ let newCardSaving = false;
  * @param {object} element
  */
 function addCardButtonClicked(categoryIndex, event) {
-  let addCardElement = addCard(cardDetails.length+1, categoryIndex);
+  let addCardElement = addCard(categoryIndex);
   if (event) {
-    if (event.target && event.target.firstElementChild) {
-      event.target.classList.add('editing-card');
-      event.target.firstElementChild.classList.add('hidden');
+    // ensure that no new card in a another category is being edited
+    // ensure that no other cards are being updated
+    if (
+      document.getElementsByClassName('editing-card').length === 0 && 
+      document.getElementsByClassName('editing-in-progress').length === 0
+      ) {
+      if (event.target && event.target.firstElementChild) {
+        event.target.classList.add('editing-card');
+        event.target.firstElementChild.classList.add('hidden');
 
-      if (event.target && event.target.lastElementChild) {
-        event.target.lastElementChild.appendChild(addCardElement);
-        event.target.lastElementChild.classList.remove('hidden');
+        if (event.target && event.target.lastElementChild) {
+          event.target.lastElementChild.appendChild(addCardElement);
+          event.target.lastElementChild.classList.remove('hidden');
+        }
       }
+    } else {
+      
     }
   }
 }

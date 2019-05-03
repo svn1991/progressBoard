@@ -3,30 +3,6 @@
 /**************************************************************************************/
 
 /**
- * Add card button is clicked
- * @param {number} categoryIndex 
- * @param {object} element
- */
-function addCardButtonClicked(categoryIndex, event) {
-  let addCardElement = addCard(cardDetails.length+1, categoryIndex);
-  if (event) {
-    if (document.getElementsByClassName('editing-card').length === 0) {
-      if (event.target && event.target.firstElementChild) {
-        event.target.classList.add('editing-card');
-        event.target.firstElementChild.classList.add('hidden');
-
-        if (event.target && event.target.lastElementChild) {
-          event.target.lastElementChild.appendChild(addCardElement);
-          event.target.lastElementChild.classList.remove('hidden');
-        }
-      }
-    } else {
-      
-    }
-  }
-}
-
-/**
  * Return add card button template
  * @param {object} cardWrapper element which will contain category cards
  * @param {number} categoryId
