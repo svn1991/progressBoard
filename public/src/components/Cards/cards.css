@@ -25,33 +25,66 @@
   font-size: 1.2em;
   margin-bottom: 5px;
   color: #ffffff;
+}
+
+.card-title span {
   float: left;
   max-width: 85%;
 }
 
+.card-title input {
+  float: left;
+  max-width: 75%;
+}
+
 .card-edit-wrapper {
   float: right;
-  margin: 1px 10px 0 0;
+  margin: 0;
   font-size: 1.1em;
 }
 
+.card-editing-wrapper .card-edit-wrapper {
+  display: flex;
+  align-items: center;
+  height: 30px;
+}
+
+.card-element .icons.fas.fa-check,
+.card-element .icons.fas.fa-pen {
+  color: #000000;
+  margin-right: 5px;
+}
+
+.card-element .icons.fas.fa-check:hover,
+.card-element .icons.fas.fa-pen:hover {
+  color: #057214;;
+}
+
+.card-element .icons.fas.fa-check:active,
+.card-element .icons.fas.fa-pen:active {
+  color: #2bca05;
+}
+
+.card-element .icons.fas.fa-times,
 .card-element .icons.fas.fa-trash {
   color: #000000;
 }
 
+.card-element .icons.fas.fa-times:hover,
 .card-element .icons.fas.fa-trash:hover {
   color: #880b1c;
 }
 
+.card-element .icons.fas.fa-times:active,
 .card-element .icons.fas.fa-trash:active {
-  color: #057214;
+  color: #f60e25;
 }
 
 .card-description {
   margin-top: 10px;
 }
 
-.card-element .card-description {
+.card-element .card-description .card-display-wrapper {
   max-height: 0;
   overflow: hidden;
 }
@@ -82,7 +115,10 @@
   max-width: 100%;
 }
 
-.add-card-wrapper input, .add-card-wrapper textarea {
+.editing-in-progress input,
+.editing-in-progress textarea,
+.add-card-wrapper input, 
+.add-card-wrapper textarea {
   width: 100%;
   border: none;
   box-shadow: 0px 1px 2px 0px #b6b6b6;
@@ -92,22 +128,26 @@
   color: #000000;
 }
 
+.editing-in-progress input,
 .add-card-wrapper input {
   height: 30px;
   box-sizing: border-box;
   padding: 2px 0 0 5px;;
 }
 
+.editing-in-progress .card-description,
 .add-card-wrapper .card-description {
   margin: 0;
 }
 
+.editing-in-progress textarea,
 .add-card-wrapper textarea {
   height: 200px;
   resize: none;
   outline-color: #6cb6ff;
   box-sizing: border-box;
   padding: 2px 5px;
+  margin-top: 10px;
 }
 
 .add-card-wrapper .card-save-wrapper {

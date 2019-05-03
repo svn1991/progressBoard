@@ -5,6 +5,31 @@ let cardDetails = {};
  * @param {object} element card element
  * @param {number} cardId card id to be deleted
  */
+function setEditCardListener(cardTemplate, cardId) {
+  let editElem = cardTemplate.getElementsByClassName('fa-pen')[0];
+  if (editElem) {
+    editElem.addEventListener(
+      'click',
+      function(event) {
+        let card = cardDetails.filter((cardInfo) => cardInfo.id === cardId)[0];
+        if (card && card.id) {
+          let cardDisplayElement = document.getElementById('card-id-'+cardId);
+          cardDisplayElement.classList.add('editing-in-progress');
+          $(cardDisplayElement).find('.card-display-wrapper').addClass('hidden');
+          $(cardDisplayElement).find('.card-editing-wrapper').removeClass('hidden');
+          console.log($(cardDisplayElement));
+          
+        }
+      }
+    );
+  }
+}
+
+/**
+ * Listener added when card is to be removed
+ * @param {object} element card element
+ * @param {number} cardId card id to be deleted
+ */
 function setDeleteCardListener(cardElement, cardId) {
   let deleteElem = cardElement.getElementsByClassName('fa-trash')[0];
   if (deleteElem) {
@@ -43,14 +68,39 @@ function getCardElement(card) {
   cardTemplate.classList.add('card-element');
   cardTemplate.innerHTML = `
     <div class="card-header">
-      <div class="card-title">${card.title}</div>
-      <div class="card-edit-wrapper">
-        <i class='icons fas fa-trash'></i>
+      <div class="card-title">
+        <div class="card-display-wrapper">
+          <span>${card.title}</span>
+          <div class="card-edit-wrapper">
+            <i class='icons fas fa-pen'></i>
+            <i class='icons fas fa-trash'></i>
+          </div>
+        </div>
+        <div class="card-editing-wrapper hidden">
+          <input type="text" name="title" value="${card.title}" placeholder="Card Name" required/>
+          <div class="card-edit-wrapper">
+            <i class='icons fas fa-check'></i>
+            <i class='icons fas fa-times'></i>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="card-description">${card.description}</div>
+    <div class="card-description">
+      <div class="card-display-wrapper">
+        <span class="display-card-fields">${card.description}</span>
+      </div>
+      <div class="card-editing-wrapper hidden">
+        <textarea
+          class="editing-card-fields" 
+          name="description" 
+          placeholder="Please enter a description (optional)."
+          wrap="hard"
+        >${card.description}</textarea>
+      </div>
+    </div>
   `;
 
+  setEditCardListener(cardTemplate, card.id);
   setDeleteCardListener(cardTemplate, card.id);
   return cardTemplate;
 }
