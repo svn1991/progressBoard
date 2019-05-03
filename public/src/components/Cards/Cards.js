@@ -1,29 +1,5 @@
-let cardDetails = {};
-
-/**
- * Listener added when card is to be removed
- * @param {object} element card element
- * @param {number} cardId card id to be deleted
- */
-function setEditCardListener(cardTemplate, cardId) {
-  let editElem = cardTemplate.getElementsByClassName('fa-pen')[0];
-  if (editElem) {
-    editElem.addEventListener(
-      'click',
-      function(event) {
-        let card = cardDetails.filter((cardInfo) => cardInfo.id === cardId)[0];
-        if (card && card.id) {
-          let cardDisplayElement = document.getElementById('card-id-'+cardId);
-          cardDisplayElement.classList.add('editing-in-progress');
-          $(cardDisplayElement).find('.card-display-wrapper').addClass('hidden');
-          $(cardDisplayElement).find('.card-editing-wrapper').removeClass('hidden');
-          console.log($(cardDisplayElement));
-          
-        }
-      }
-    );
-  }
-}
+let cardDetails = [];
+let cardKeyValue = {};
 
 /**
  * Listener added when card is to be removed
@@ -78,16 +54,14 @@ function getCardElement(card) {
         </div>
         <div class="card-editing-wrapper hidden">
           <input type="text" name="title" value="${card.title}" placeholder="Card Name" required/>
-          <div class="card-edit-wrapper">
-            <i class='icons fas fa-check'></i>
-            <i class='icons fas fa-times'></i>
-          </div>
         </div>
       </div>
     </div>
     <div class="card-description">
       <div class="card-display-wrapper">
-        <span class="display-card-fields">${card.description}</span>
+        <span class="display-card-fields ${!card.description ? 'grey-out' : ''}">
+          ${card.description ? card.description : 'No description'}
+        </span>
       </div>
       <div class="card-editing-wrapper hidden">
         <textarea
@@ -98,7 +72,20 @@ function getCardElement(card) {
         >${card.description}</textarea>
       </div>
     </div>
+    <div class="card-editing-wrapper card-editing-controls hidden">
+      <div class="card-edit-wrapper">
+        <div>
+          <i class='icons fas fa-check card-editing-action-button save-card'></i>
+        </div>
+        <div>
+          <i class='icons fas fa-times card-editing-action-button discard-card'></i>
+        </div>
+      </div>
+    </div>
   `;
+
+  setSaveEditCardListener(cardTemplate, card.id);
+  setResetEditCardListener(cardTemplate, card.id);
 
   setEditCardListener(cardTemplate, card.id);
   setDeleteCardListener(cardTemplate, card.id);
@@ -130,6 +117,7 @@ function updateCardsDetails(action) {
     .then(function(cardsInfo) {
       if (cardsInfo.length > 0) {
         cardDetails = cardsInfo;
+        creatCardsKeyValue();
         return action + ' caused proper load of card details';
       } else {
         throw action + ' did not update card details';

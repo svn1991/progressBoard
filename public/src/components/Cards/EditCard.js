@@ -1,41 +1,53 @@
 /**
- * Get edit cards template for editing already saved cards
- * @param {number} cardId 
- * @param {string} description
- * @param {string} title
- * @param {number} columnId
- * @return {string} innerHTML
+ * Replace display view of card with an editing view
+ * @param {object} element card element
+ * @param {number} cardId card id to be deleted
  */
-function getEditElement(card) {
-  let editDiv = document.createElement('div');
-  editDiv.dataset['categoryId']= card.columnId;
-  editDiv.classList.add('edit-card-element');
+function setEditCardListener(cardTemplate, cardId) {
+  let editElem = cardTemplate.getElementsByClassName('fa-pen')[0];
+  if (editElem) {
+    editElem.addEventListener(
+      'click',
+      function(event) {
+        let card = cardKeyValue[cardId];
+        if (card && card.id) {
+          cardTemplate.classList.add('editing-in-progress');
+          $(cardTemplate).find('.card-display-wrapper').addClass('hidden');
+          $(cardTemplate).find('.card-editing-wrapper').removeClass('hidden');          
+        }
+      }
+    );
+  }
+}
 
-  editDiv.innerHTML = `
-    <form id="edit-card-form">
-      <div class="card-header">
-        <div class="card-title">
-          <input type="text" name="title" value="${card.title}" placeholder="Card Name" required/>
-          <input type="hidden" name="columnId" value="${card.columnId}" />
-          <input type="hidden" name="cardId" value="${card.id}" />
-        </div>
-      </div>
-      <div class="card-description">
-        <textarea 
-          name="description" 
-          placeholder="Please enter a description (optional)."
-          wrap="hard"
-        >${card.description}</textarea>
-      </div>
-      <div class="card-save-wrapper">
-        <div>
-          <input type="submit" value="&#xf0c7;" name="submit" class="icons fas fa-save save-edit-card card-edit-action-button" />
-        </div>
-        <div>
-          <i class="icons fas fa-trash discard-edit-card card-edit-action-button"></i>
-        </div>
-      </div>
-    </form>      
-  `;
-  return editDiv;
+function setSaveEditCardListener(cardTemplate, cardId) {
+
+}
+
+/**
+ * If editing changes made to the card is to be discarded
+ * @param {object} cardTemplate card element
+ * @param {number} cardId card info data object
+ */
+function setResetEditCardListener(cardTemplate, cardId) {
+  let crossIcon = cardTemplate.getElementsByClassName('fa-times')[0];
+  
+  if (crossIcon) {
+    crossIcon.addEventListener('click', function(event) {
+      let titleInput = cardTemplate.getElementsByTagName('input')[0];
+      let textarea = cardTemplate.getElementsByTagName('textarea')[0];
+      let card = cardKeyValue[cardId];
+
+      console.log(cardTemplate)
+
+      if (titleInput && textarea && card && card.id) {
+        titleInput.value = card.title;
+        textarea.value = card.description;
+      }
+
+      cardTemplate.classList.remove('editing-in-progress');
+      $(cardTemplate).find('.card-editing-wrapper').addClass('hidden');
+      $(cardTemplate).find('.card-display-wrapper').removeClass('hidden');
+    });
+  }
 }
