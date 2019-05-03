@@ -66,7 +66,7 @@ function setListenerForSavingNewCard(formElement) {
             console.log(msg);
             return loadCards('newCardAdded')
             .then(function(msg){
-              resetEditCard();
+              resetAddCard();
               console.log(msg);
             })
             .fail(function(err) {
@@ -95,7 +95,7 @@ function setListenerForDiscardingNewCard(element) {
   if (element) {
     element.addEventListener(
       'click', 
-      resetEditCard
+      resetAddCard
     );
   }
 }
@@ -103,7 +103,7 @@ function setListenerForDiscardingNewCard(element) {
 /**
  * Reset add card element to minimize
  */
-function resetEditCard () {
+function resetAddCard () {
   let editingCard = document.getElementsByClassName('editing-card')[0];
   if (editingCard) {
     editingCard.classList.remove('editing-card');
