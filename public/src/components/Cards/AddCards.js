@@ -119,11 +119,9 @@ function resetAddCard () {
  * @param {index} categoryIndex column id in database
  * @return {object} dom element template
  */
-function addCard(cardIndex, categoryIndex) {
+function addCard(categoryIndex) {
   let editDiv = document.createElement('div');
-  editDiv.id="card-id-" + cardIndex;
   editDiv.dataset['categoryId']= categoryIndex;
-  editDiv.dataset['cardId']= cardIndex;
   editDiv.classList.add('edit-card-element');
 
   editDiv.innerHTML = `
