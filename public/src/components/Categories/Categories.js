@@ -3,27 +3,6 @@
 /**************************************************************************************/
 
 /**
- * Return add card button template
- * @param {object} cardWrapper element which will contain category cards
- * @param {number} categoryId
- * @returns {object} add button element
- */
-function getAddCardButtonTemplate(categoryId) {
-  const addButton = document.createElement('div');
-  addButton.classList.add('add-card-button');
-  addButton.addEventListener('click', 
-    function _addCardTemplate(event) {
-      addCardButtonClicked(categoryId, event);      
-    }
-  );
-  addButton.innerHTML = `
-    <i class="icons fas fa-plus"></i>
-    <div class="add-card-wrapper hidden"></div>
-  `;
-  return addButton;
-}
-
-/**
  * When category info is received, create category html
  */
 function createCategories(categories) {
