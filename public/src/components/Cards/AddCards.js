@@ -5,7 +5,6 @@ let newCardSaving = false;
 
 /**
  * Return add card button template
- * @param {object} cardWrapper element which will contain category cards
  * @param {number} categoryId
  * @returns {object} add button element
  */
@@ -13,7 +12,7 @@ function getAddCardButtonTemplate(categoryId) {
   const addButton = document.createElement('div');
   addButton.classList.add('add-card-button');
   addButton.addEventListener('click', 
-    function _addCardTemplate(event) {
+    function (event) {
       addCardButtonClicked(categoryId, event);      
     }
   );
