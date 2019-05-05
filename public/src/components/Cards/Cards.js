@@ -115,19 +115,22 @@ function getCardElement(card, update=false) {
 /**
  * Create cards elements
  */
-function createCards(cards) {
-  for (let i=0; i<cards.length; i++) {
-    let cardElement = getCardElement(cards[i]);
+function createCards() {
+  for (let i=0; i<cardDetails.length; i++) {
+    let cardElement = getCardElement(cardDetails[i]);
     if (!cardElement) {
       continue;
     }
-    let cardCategoryId = "cards-category-"+cards[i].columnId;
+    let cardCategoryId = "cards-category-"+cardDetails[i].columnId;
     let categoryElement = document.getElementById(cardCategoryId);
 
     categoryElement.appendChild(cardElement);
   }
 }
 
+/**
+ * map card details array into object
+ */
 function createCardsKeyValue() {
   cardDetails.map((card) => cardKeyValue[card.id] = card);
 }
@@ -142,13 +145,15 @@ function updateCardsDetails(action) {
       if (cardsInfo.length > 0) {
         cardDetails = cardsInfo;
         createCardsKeyValue();
-        return action + ' caused proper load of card details';
+        console.log(action + ' caused proper load of card details');
+        return;
       } else {
         throw action + ' did not update card details';
       }
     })
     .fail(function (err) {
-      return err;
+      console.log(err);
+      return;
     });
 }
 
@@ -157,15 +162,18 @@ function updateCardsDetails(action) {
  */
 function loadCards(action) {
   return updateCardsDetails(action)
-  .then(function(cardsInfo) {
-    if (cardsInfo.length > 0) {
-      createCards(cardDetails);
-      return 'Successfully loaded cards'
+  .then(function(msg) {
+    if (cardDetails.length > 0) {
+      createCards();
+      console.log(msg);
+      console.log('Successfully loaded cards');
+      return;
     } else {
       throw 'Please check cards information in database'
     }
   })
   .fail(function (err) {
-    return err;
+    console.log(err);
+    return;
   });
 }
