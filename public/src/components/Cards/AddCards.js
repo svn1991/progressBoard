@@ -13,7 +13,7 @@ function addCardButtonClicked(categoryIndex, event) {
   if (event) {
     // ensure that no new card in a another category is being edited
     // ensure that no other cards are being updated
-    if (
+    /*if (
       document.getElementsByClassName('editing-card').length === 0 && 
       document.getElementsByClassName('editing-in-progress').length === 0
       ) {
@@ -28,6 +28,15 @@ function addCardButtonClicked(categoryIndex, event) {
       }
     } else {
       
+    }*/
+    if (event.target && event.target.firstElementChild) {
+      event.target.classList.add('editing-card');
+      event.target.firstElementChild.classList.add('hidden');
+
+      if (event.target && event.target.lastElementChild) {
+        event.target.lastElementChild.appendChild(addCardElement);
+        event.target.lastElementChild.classList.remove('hidden');
+      }
     }
   }
 }
