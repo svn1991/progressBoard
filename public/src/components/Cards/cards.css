@@ -25,14 +25,40 @@
   font-size: 1.2em;
   margin-bottom: 5px;
   color: #ffffff;
+}
+
+.card-title span {
   float: left;
-  max-width: 85%;
+  width: 80%;
+}
+
+.card-title input {
+  float: left;
+  width: 75%;
+}
+
+.card-title .card-display-wrapper {
+  display: flex;
 }
 
 .card-edit-wrapper {
   float: right;
-  margin: 1px 10px 0 0;
+  margin: 0;
   font-size: 1.1em;
+  display: flex;
+}
+
+.card-element .icons.fas.fa-pen {
+  color: #000000;
+  margin-right: 5px;
+}
+
+.card-element .icons.fas.fa-pen:hover {
+  color: #057214;
+}
+
+.card-element .icons.fas.fa-pen:active {
+  color: #2bca05;
 }
 
 .card-element .icons.fas.fa-trash {
@@ -44,14 +70,14 @@
 }
 
 .card-element .icons.fas.fa-trash:active {
-  color: #057214;
+  color: #f60e25;
 }
 
 .card-description {
   margin-top: 10px;
 }
 
-.card-element .card-description {
+.card-element .card-description .card-display-wrapper {
   max-height: 0;
   overflow: hidden;
 }
@@ -82,7 +108,10 @@
   max-width: 100%;
 }
 
-.add-card-wrapper input, .add-card-wrapper textarea {
+.editing-in-progress input,
+.editing-in-progress textarea,
+.add-card-wrapper input, 
+.add-card-wrapper textarea {
   width: 100%;
   border: none;
   box-shadow: 0px 1px 2px 0px #b6b6b6;
@@ -92,24 +121,34 @@
   color: #000000;
 }
 
+.editing-in-progress input,
 .add-card-wrapper input {
   height: 30px;
   box-sizing: border-box;
-  padding: 2px 0 0 5px;;
+  padding: 2px 0 0 5px;
 }
 
+.editing-in-progress .card-description,
 .add-card-wrapper .card-description {
   margin: 0;
 }
 
+.editing-in-progress textarea,
 .add-card-wrapper textarea {
   height: 200px;
   resize: none;
   outline-color: #6cb6ff;
   box-sizing: border-box;
   padding: 2px 5px;
+  margin-top: 10px;
 }
 
+.card-editing-controls.hidden  {
+  height: 0;
+  margin: 0;
+}
+
+.card-editing-controls,
 .add-card-wrapper .card-save-wrapper {
   margin: 20px;
   display: flex;
@@ -118,6 +157,13 @@
   height: 50px;
 }
 
+.card-editing-controls .card-edit-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-editing-controls .card-edit-wrapper>div,
 .add-card-wrapper .card-save-wrapper>div {
   width: 50px;
   height: 50px;
@@ -126,10 +172,20 @@
   align-items: center;
 }
 
+.card-editing-controls.hidden .card-edit-wrapper>div {
+  height: 0;
+}
+
+.card-editing-controls .card-edit-wrapper>div:first-child,
 .add-card-wrapper .card-save-wrapper>div:first-child {  
   margin-right: 20px;
 }
 
+.card-editing-controls.hidden .card-editing-action-button {
+  height: 0;
+}
+
+.card-editing-controls .card-editing-action-button,
 .add-card-wrapper .card-save-action-button {
   width: 45px;
   height: 45px;
@@ -141,17 +197,20 @@
   outline: none;
 }
 
+.card-editing-controls .save-card,
 .add-card-wrapper .save-card {
   background-color: #61ff61;
   font-size: 1.8em;
   padding: 0;
-  box-shadow: 0px 2px 0px 1px #009700;
+  box-shadow: 0px 1px 0px 2px #009700;
 }
 
+.card-editing-controls .save-card:hover,
 .add-card-wrapper .save-card:hover {
   background-color: #0ad90a;
 }
 
+.card-editing-controls .save-card:active,
 .add-card-wrapper .save-card:active {
   background-color: #009700;
   box-shadow: none;
@@ -159,16 +218,19 @@
   width: 47px;
 }
 
+.card-editing-controls .discard-card,
 .add-card-wrapper .discard-card {
   background-color: #fe5a78;
   font-size: 1.6em;
-  box-shadow: 0px 2px 0px 1px #d90a30;
+  box-shadow: 0px 1px 0px 2px #d90a30;
 }
 
+.card-editing-controls .discard-card:hover,
 .add-card-wrapper .discard-card:hover {
   background-color: #ff002f;
 }
 
+.card-editing-controls .discard-card:active,
 .add-card-wrapper .discard-card:active {
   background-color: #ea2e51;
   box-shadow: none;

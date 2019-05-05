@@ -71,3 +71,23 @@ function deleteCard(cardId) {
     }
   });
 }
+
+/**
+ * Update card object
+ * @param {object} card
+ */
+function updateCard(card) {
+  return $.ajax({
+    type: 'PUT',
+    url: '/cards/'+card.id,
+    data: JSON.stringify(card),
+    contentType: "application/json",
+    dataType: "json",
+    success: function() {
+      return card.id + ' updated';
+    },
+    error: function(err) {
+      return err + 'unable to update card'
+    }
+  });
+}

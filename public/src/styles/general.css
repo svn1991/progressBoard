@@ -16,7 +16,12 @@ h1 {
 
 .hidden {
   visibility: hidden;
-  padding: 0;
-  margin: 0;
-  font-size: 0;
+  padding: 0!important;
+  margin: 0!important;
+  font-size: 0!important;
+  height: 0!important;
+}
+
+.grey-out {
+  color:#a8565685;
 }
