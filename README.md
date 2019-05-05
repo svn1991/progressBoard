@@ -23,7 +23,7 @@ This page contains description and requirements for a Front-End assignment on [W
 5. The user should be able to:
    - display all columns with all cards :heavy_check_mark:,
    - create a new card :heavy_check_mark:,
-   - modify a card,
+   - modify a card :heavy_check_mark:,
    - delete a card :heavy_check_mark:,
    - add a column,
    - modify a column,
