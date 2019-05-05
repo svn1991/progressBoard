@@ -21,7 +21,7 @@ function createCategories(categories) {
       categoryElement.getElementsByClassName('cards-wrapper')[0].appendChild(getAddCardButtonTemplate(category.id));
       addCategory(categoryElement);
     } else {
-      throw 'Could not find cards-wrapper element for Category ' + category.id + '.';
+      console.log('Could not find cards-wrapper element for Category ' + category.id + '.');
     }
   }
 }
@@ -57,6 +57,7 @@ progressCategoriesTemplate.innerHTML =
 const categoriesWrapper = document.getElementById('progress-categories-wrapper');
 categoriesWrapper.innerHTML = progressCategoriesTemplate.innerHTML;
 const categoriesContainer = document.getElementById('categories-container');
+categoriesContainer.appendChild(getAddCategoryWrapper());
 
 /**
  * Execute: Get categories data and start creating cards
@@ -73,7 +74,7 @@ function loadCategories() {
       })
       .fail(function(err) {
         return err;
-      });;
+      });
     } else {
       throw 'Please check categories information in database'
     }
