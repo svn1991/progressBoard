@@ -56,6 +56,27 @@ function addCardToDatabase(newCardInfo) {
 }
 
 /**
+ * Get category object which can be pushed into the database
+ * @param {object} newCategoryInfo 
+ * @return {object} category info object which has same format as database
+ */
+function addCategoryToDatabase(newCategoryInfo) {
+  return $.ajax({
+    type: 'POST',
+    url: '/columns',
+    data: JSON.stringify(newCategoryInfo),
+    contentType: "application/json",
+    dataType: "json",
+    success: function() {
+      return newCategoryInfo + ' data sent to database successfully';
+    },
+    error: function(err) {
+      return err + 'ajax failing'
+    }
+  });
+}
+
+/**
  * Delete card object based on its id
  * @param {number} cardId
  */

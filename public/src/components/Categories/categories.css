@@ -6,9 +6,13 @@
   display: flex;
 }
 
+#categories-container>div {
+  flex-shrink: 0;
+}
+
 .category-element {
   width: 250px;
-  min-height: 300px;
+  min-height: 100px;
   box-shadow: 0px 2px 5px 0px #b0b0b5;
   background-color: #fefefe;
   margin-right: 20px;
@@ -26,7 +30,6 @@
 }
 
 #add-category-wrapper .category-element {
-  min-height: 140px;
   background-color: #e8e8e8;
 }
 
