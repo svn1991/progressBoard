@@ -29,18 +29,23 @@
 
 .card-title span {
   float: left;
-  max-width: 85%;
+  width: 80%;
 }
 
 .card-title input {
   float: left;
-  max-width: 75%;
+  width: 75%;
+}
+
+.card-title .card-display-wrapper {
+  display: flex;
 }
 
 .card-edit-wrapper {
   float: right;
   margin: 0;
   font-size: 1.1em;
+  display: flex;
 }
 
 .card-element .icons.fas.fa-pen {

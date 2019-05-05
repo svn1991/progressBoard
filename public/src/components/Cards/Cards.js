@@ -30,10 +30,24 @@ function setDeleteCardListener(cardElement, cardId) {
 }
 
 /**
+ * Update a card DOM with latest info
+ * @param {number} cardId
+ */
+function updateCardElement(cardId) {
+  let newCardElement = getCardElement(cardKeyValue[cardId], true);
+  let oldCardElement = document.getElementById("card-id-" + cardId);
+
+  newCardElement.classList.add('hidden');
+  oldCardElement.insertAdjacentElement('afterend', newCardElement);
+  oldCardElement.parentNode.removeChild(oldCardElement);
+  newCardElement.classList.remove('hidden');
+}
+
+/**
  * Return individual card elements
  */
-function getCardElement(card) {
-  if ($(".card-element#card-id-" + card.id).length > 0) {
+function getCardElement(card, update=false) {
+  if (!update && $(".card-element#card-id-" + card.id).length > 0) {
     return false;
   }
   
@@ -84,10 +98,16 @@ function getCardElement(card) {
     </div>
   `;
 
+  // save changes made during editing of a card
   setSaveEditCardListener(cardTemplate, card.id);
+
+  // reset changes made during editing of a card
   setResetEditCardListener(cardTemplate, card.id);
 
+  // change card display mode to editing mode
   setEditCardListener(cardTemplate, card.id);
+
+  // delete the card
   setDeleteCardListener(cardTemplate, card.id);
   return cardTemplate;
 }
@@ -108,6 +128,10 @@ function createCards(cards) {
   }
 }
 
+function createCardsKeyValue() {
+  cardDetails.map((card) => cardKeyValue[card.id] = card);
+}
+
 /**
  * Update Card details variable
  * @param {string} action status where this function was called
@@ -117,7 +141,7 @@ function updateCardsDetails(action) {
     .then(function(cardsInfo) {
       if (cardsInfo.length > 0) {
         cardDetails = cardsInfo;
-        creatCardsKeyValue();
+        createCardsKeyValue();
         return action + ' caused proper load of card details';
       } else {
         throw action + ' did not update card details';
