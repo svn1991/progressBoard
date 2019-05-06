@@ -12,6 +12,8 @@ function setDeleteCardListener(cardElement, cardId) {
     deleteElem.addEventListener(
       'click', 
       function(event) {
+        event.preventDefault();
+        event.stopPropagation();
         cardElement.parentNode.removeChild(cardElement);
         deleteCard(cardId)
         .then(function(msg) {
@@ -23,7 +25,7 @@ function setDeleteCardListener(cardElement, cardId) {
         })
         .always(function(msg) {
           console.log(msg);
-        });
+        });       
       }
     );
   }
@@ -44,6 +46,15 @@ function updateCardElement(cardId) {
 }
 
 /**
+ * Setting data of card dragged
+ * @param {object} event
+ */
+function dragCard(event) {
+  console.log(event.target.id)
+  event.dataTransfer.setData("text", event.target.id);
+}
+
+/**
  * Return individual card elements
  */
 function getCardElement(card, update=false) {
@@ -56,6 +67,10 @@ function getCardElement(card, update=false) {
   cardTemplate.dataset['categoryId'] = card.columnId;
   cardTemplate.dataset['cardId'] = card.id;
   cardTemplate.classList.add('card-element');
+  cardTemplate.draggable = true;
+  cardTemplate.addEventListener('dragstart', function(event) {
+    dragCard(event);
+  });
   cardTemplate.innerHTML = `
     <div class="card-header">
       <div class="card-title">
@@ -115,19 +130,24 @@ function getCardElement(card, update=false) {
 /**
  * Create cards elements
  */
-function createCards(cards) {
-  for (let i=0; i<cards.length; i++) {
-    let cardElement = getCardElement(cards[i]);
+function createCards() {
+  for (let i=0; i<cardDetails.length; i++) {
+    let cardElement = getCardElement(cardDetails[i]);
     if (!cardElement) {
       continue;
     }
-    let cardCategoryId = "cards-category-"+cards[i].columnId;
+    let cardCategoryId = "cards-category-"+cardDetails[i].columnId;
     let categoryElement = document.getElementById(cardCategoryId);
 
-    categoryElement.appendChild(cardElement);
+    if (categoryElement) {
+      categoryElement.appendChild(cardElement);
+    }
   }
 }
 
+/**
+ * map card details array into object
+ */
 function createCardsKeyValue() {
   cardDetails.map((card) => cardKeyValue[card.id] = card);
 }
@@ -138,18 +158,20 @@ function createCardsKeyValue() {
  */
 function updateCardsDetails(action) {
   return getCardsData()
-    .then(function(cardsInfo) {
-      if (cardsInfo.length > 0) {
-        cardDetails = cardsInfo;
-        createCardsKeyValue();
-        return action + ' caused proper load of card details';
-      } else {
-        throw action + ' did not update card details';
-      }
-    })
-    .fail(function (err) {
-      return err;
-    });
+  .then(function(cardsInfo) {
+    if (cardsInfo.length > 0) {
+      cardDetails = cardsInfo;
+      createCardsKeyValue();
+      console.log(action + ' caused proper load of card details');
+      return;
+    } else {
+      throw action + ' did not update card details';
+    }
+  })
+  .fail(function (err) {
+    console.log(err);
+    return;
+  }); 
 }
 
 /**
@@ -157,15 +179,18 @@ function updateCardsDetails(action) {
  */
 function loadCards(action) {
   return updateCardsDetails(action)
-  .then(function(cardsInfo) {
-    if (cardsInfo.length > 0) {
-      createCards(cardDetails);
-      return 'Successfully loaded cards'
+  .then(function(msg) {
+    if (cardDetails.length > 0) {
+      createCards();
+      console.log(msg);
+      console.log('Successfully loaded cards');
+      return;
     } else {
       throw 'Please check cards information in database'
     }
   })
   .fail(function (err) {
-    return err;
+    console.log(err);
+    return;
   });
 }

@@ -9,11 +9,13 @@ function setEditCardListener(cardTemplate, cardId) {
     editElem.addEventListener(
       'click',
       function(event) {
-        let card = cardKeyValue[cardId];
-        if (card && card.id) {
-          cardTemplate.classList.add('editing-in-progress');
-          $(cardTemplate).find('.card-display-wrapper').addClass('hidden');
-          $(cardTemplate).find('.card-editing-wrapper').removeClass('hidden');          
+        if (isActivtityInProgress()) {
+          let card = cardKeyValue[cardId];
+          if (card && card.id) {
+            cardTemplate.classList.add('editing-in-progress');
+            $(cardTemplate).find('.card-display-wrapper').addClass('hidden');
+            $(cardTemplate).find('.card-editing-wrapper').removeClass('hidden');          
+          }
         }
       }
     );
@@ -30,6 +32,10 @@ function setSaveEditCardListener(cardTemplate, cardId) {
   
   if (checkIcon) {
     checkIcon.addEventListener('click', function(event) {
+
+      event.preventDefault();
+      event.stopPropagation();
+
       let titleInput = cardTemplate.getElementsByTagName('input')[0];
       let textarea = cardTemplate.getElementsByTagName('textarea')[0];
       let card = {...cardKeyValue[cardId]};
@@ -37,7 +43,6 @@ function setSaveEditCardListener(cardTemplate, cardId) {
       if (titleInput && textarea && card && card.id) {
         card.title = titleInput.value;
         card.description = textarea.value;
-
         updateCard(card)
         .then(function(msg) {
           console.log(msg);

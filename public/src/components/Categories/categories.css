@@ -6,9 +6,13 @@
   display: flex;
 }
 
+#categories-container>div {
+  flex-shrink: 0;
+}
+
 .category-element {
   width: 250px;
-  min-height: 300px;
+  min-height: 100px;
   box-shadow: 0px 2px 5px 0px #b0b0b5;
   background-color: #fefefe;
   margin-right: 20px;
@@ -16,7 +20,175 @@
   display: inline-table;
 }
 
+.category-title-wrapper {
+  display: flex;
+}
+
+.category-title-container {
+  width: 80%;
+  margin-right: 20px;
+}
+
+.category-title-container .category-input {
+  font-size: 1.5em;
+  border: none;
+  box-shadow: 0px 1px 2px 0px #b6b6b6;
+  border-radius: 3px;
+  background-color: #ffffff;
+  color: #000000;
+  padding: 10px 0 10px 10px;
+  margin: 12px 0 29px 10px;
+  line-height: 0;
+  width: 100%;
+}
+
+.category-actions-wrapper {
+  margin-top: 20px;
+}
+
 .category-title {
   padding: 20px 10px 20px 13px;
-   font-size: 1.5em;
+  font-size: 1.5em;
+}
+
+.category-input.hidden {
+  display: none;
+}
+
+#add-category-wrapper {
+  order: 1;
+}
+
+#add-category-wrapper .category-element {
+  background-color: #e8e8e8;
+}
+
+.category-deletion-wrapper {
+    margin: 20px 10px 10px;
+    padding: 10px 10px 5px;
+    background-color: #fdf39b;
+    border-radius: 3px;
+}
+
+/*  STYLING FOR CATEGORY WITH INPUTS   */
+
+.add-category-button {
+  width: 230px;
+  height: 12px;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 10px;
+  background-color: #e1e1e1;
+  border-radius: 3px;
+}
+
+.add-category-button:hover {
+  background-color: #37b648;
+  color: #ffffff;
+}
+
+#category-title-input {
+  font-size: 1.5em;
+  border: none;
+  box-shadow: 0px 1px 2px 0px #b6b6b6;
+  border-radius: 3px;
+  background-color: #ffffff;
+  color: #000000;
+  padding: 10px 0 10px 10px;
+  margin: 12px 0 0 10px;
+  width: 220px;
+}
+
+.category-deletion-controls,
+.category-save-wrapper {
+  margin: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+}
+
+.category-deletion-controls>div,
+.category-save-wrapper>div {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.category-deletion-controls>div:first-child,
+.category-save-wrapper>div:first-child {  
+  margin-right: 20px;
+}
+
+.category-deleting-action-button,
+.category-save-action-button {
+  width: 45px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  color: #ffffff;
+  outline: none;
+}
+
+.category-deleting-action-button.fa-check,
+.save-category {
+  background-color: #61ff61;
+  font-size: 1.8em;
+  padding: 0;
+  box-shadow: 0px 1px 0px 2px #009700;
+}
+
+.category-deleting-action-button.fa-check:hover,
+.save-category:hover {
+  background-color: #0ad90a;
+}
+
+.category-deleting-action-button.fa-check:active,
+.save-category:active {
+  background-color: #009700;
+  box-shadow: none;
+  height: 47px;
+  width: 47px;
+}
+
+.category-deleting-action-button.fa-times,
+.discard-category {
+  background-color: #fe5a78;
+  font-size: 1.6em;
+  box-shadow: 0px 1px 0px 2px #d90a30;
+}
+
+.category-deleting-action-button.fa-times:hover,
+.discard-category:hover {
+  background-color: #ff002f;
+}
+
+.category-deleting-action-button.fa-times:active,
+.discard-category:active {
+  background-color: #ea2e51;
+  box-shadow: none;
+  height: 47px;
+  width: 47px;
+}
+
+.category-actions-wrapper .discard-category {
+  background-color: unset;
+  font-size: 1.6em;
+  box-shadow: unset;
+  color: #000000;
+}
+
+.category-actions-wrapper .discard-category:hover {
+  color: #fe5a78;
+}
+
+.category-actions-wrapper .discard-category:active {
+  color:#d90a30;
+  height: unset;
+  width: unset;
 }

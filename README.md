@@ -25,9 +25,9 @@ This page contains description and requirements for a Front-End assignment on [W
    - create a new card :heavy_check_mark:,
    - modify a card :heavy_check_mark:,
    - delete a card :heavy_check_mark:,
-   - add a column,
-   - modify a column,
-   - delete a column,
+   - add a column :heavy_check_mark:,
+   - modify a column :heavy_check_mark:,
+   - delete a column :heavy_check_mark:,
    - search for any keywords presents on one or multiple cards. The view should update without reloading the whole page,
    - drag and drop a card from one column to another,
    - click on a card to see its description. The description should be in the same view and extend the card container. It should **not** open in another page or popup/modal.

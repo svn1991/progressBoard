@@ -4,6 +4,26 @@
 let newCardSaving = false;
 
 /**
+ * Return add card button template
+ * @param {number} categoryId
+ * @returns {object} add button element
+ */
+function getAddCardButtonTemplate(categoryId) {
+  const addButton = document.createElement('div');
+  addButton.classList.add('add-card-button');
+  addButton.addEventListener('click', 
+    function (event) {
+      addCardButtonClicked(categoryId, event);      
+    }
+  );
+  addButton.innerHTML = `
+    <i class="icons fas fa-plus"></i>
+    <div class="add-card-wrapper hidden"></div>
+  `;
+  return addButton;
+}
+
+/**
  * Add card button is clicked
  * @param {number} categoryIndex 
  * @param {object} element
@@ -13,10 +33,7 @@ function addCardButtonClicked(categoryIndex, event) {
   if (event) {
     // ensure that no new card in a another category is being edited
     // ensure that no other cards are being updated
-    /*if (
-      document.getElementsByClassName('editing-card').length === 0 && 
-      document.getElementsByClassName('editing-in-progress').length === 0
-      ) {
+    if (isActivtityInProgress()) {
       if (event.target && event.target.firstElementChild) {
         event.target.classList.add('editing-card');
         event.target.firstElementChild.classList.add('hidden');
@@ -28,15 +45,6 @@ function addCardButtonClicked(categoryIndex, event) {
       }
     } else {
       
-    }*/
-    if (event.target && event.target.firstElementChild) {
-      event.target.classList.add('editing-card');
-      event.target.firstElementChild.classList.add('hidden');
-
-      if (event.target && event.target.lastElementChild) {
-        event.target.lastElementChild.appendChild(addCardElement);
-        event.target.lastElementChild.classList.remove('hidden');
-      }
     }
   }
 }
@@ -75,6 +83,7 @@ function setListenerForSavingNewCard(formElement) {
       'submit',
       function _saveCard(event) {
         event.preventDefault();
+        event.stopPropagation();
         let formData = $('#save-card-form') ? $('#save-card-form').serializeArray() : [];
         let formattedData = addNewCardInfo(formData);
         if (!newCardSaving) {
