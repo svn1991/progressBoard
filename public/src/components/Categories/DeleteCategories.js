@@ -53,7 +53,7 @@ function runDeleteCategory(categoryId) {
       .then(function(msg3){
         console.log(msg3);
       })
-      .fail(function(err){
+      .fail(function(err){ 
         console.log(err);
       }); 
     })
