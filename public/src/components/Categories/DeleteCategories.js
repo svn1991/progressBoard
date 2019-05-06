@@ -49,9 +49,16 @@ function runDeleteCategory(categoryId) {
     return updateCategoryDetails()
     .then(function(msg){
       console.log(msg)
+      return updateCardsDetails()
+      .then(function(msg3){
+        console.log(msg3);
+      })
+      .fail(function(err){
+        console.log(err);
+      }); 
     })
-    .fail(function(){
-      console.log(msg2);
+    .fail(function(err){
+      console.log(err);
     });    
   })
   .fail(function(err){
