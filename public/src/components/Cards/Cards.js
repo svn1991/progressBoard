@@ -12,6 +12,8 @@ function setDeleteCardListener(cardElement, cardId) {
     deleteElem.addEventListener(
       'click', 
       function(event) {
+        event.preventDefault();
+        event.stopPropagation();
         cardElement.parentNode.removeChild(cardElement);
         deleteCard(cardId)
         .then(function(msg) {
@@ -23,7 +25,7 @@ function setDeleteCardListener(cardElement, cardId) {
         })
         .always(function(msg) {
           console.log(msg);
-        });
+        });       
       }
     );
   }
@@ -141,20 +143,20 @@ function createCardsKeyValue() {
  */
 function updateCardsDetails(action) {
   return getCardsData()
-    .then(function(cardsInfo) {
-      if (cardsInfo.length > 0) {
-        cardDetails = cardsInfo;
-        createCardsKeyValue();
-        console.log(action + ' caused proper load of card details');
-        return;
-      } else {
-        throw action + ' did not update card details';
-      }
-    })
-    .fail(function (err) {
-      console.log(err);
+  .then(function(cardsInfo) {
+    if (cardsInfo.length > 0) {
+      cardDetails = cardsInfo;
+      createCardsKeyValue();
+      console.log(action + ' caused proper load of card details');
       return;
-    });
+    } else {
+      throw action + ' did not update card details';
+    }
+  })
+  .fail(function (err) {
+    console.log(err);
+    return;
+  }); 
 }
 
 /**
