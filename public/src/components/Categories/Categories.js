@@ -2,6 +2,51 @@ let categoryDetails = [];
 let categoryKeyValue = {};
 
 /**
+ * Allow card to be dropped into other categories
+ * @param {object} event 
+ */
+function allowCardDrop(event) {
+  event.preventDefault();
+}
+
+/**
+ * Card dropped into other categories
+ * @param {object} event 
+ * @param {string} categoryId
+ */
+function dropCard(event, categoryId) {
+  event.preventDefault();
+  const data = event.dataTransfer.getData("text");
+  const card = document.getElementById(data);
+  const wrapper = document.getElementById('cards-category-'+categoryId);
+
+  if (wrapper && card) {
+    const cardId = parseInt(card.dataset["cardId"]);
+    wrapper.appendChild(card);
+    updateCard({
+      ...cardKeyValue[cardId],
+      columnId: categoryId
+    })
+    .then(function(msg){
+      console.log(msg);
+      return updateCardsDetails()
+      .then(function(msg){
+        console.log(msg);
+        return;        
+      })
+      .fail(function(err){
+        console.log(err);
+        return err;
+      });
+    })
+    .fail(function(err){
+      console.log(err);
+      return err;
+    });
+  }
+}
+
+/**
  * Get category element template
  */
 function getCategoryElement(category, update=false) {
@@ -35,9 +80,21 @@ function getCategoryElement(category, update=false) {
           <i class='icons fas fa-times category-deleting-action-button discard-card'></i>
         </div>
       </div>
-    </div>  
-    <div class="cards-wrapper" data-category-id=${category.id} id="cards-category-${category.id}"></div>
+    </div>
   `;
+
+  const cardsWrapper = document.createElement('div');
+  cardsWrapper.classList.add('cards-wrapper');
+  cardsWrapper.dataset['categoryId'] = category.id;
+  cardsWrapper.id = 'cards-category-'+category.id;
+  cardsWrapper.addEventListener('dragover', function(event) {
+    allowCardDrop(event);
+  });
+  cardsWrapper.addEventListener('drop', function(event) {
+    dropCard(event, category.id);
+  });
+
+  categoryElement.appendChild(cardsWrapper);
 
   switchCategoryTitleListener(categoryElement, category.id);
   deleteCategoryListener(categoryElement, category.id);

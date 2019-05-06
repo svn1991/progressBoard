@@ -46,6 +46,15 @@ function updateCardElement(cardId) {
 }
 
 /**
+ * Setting data of card dragged
+ * @param {object} event
+ */
+function dragCard(event) {
+  console.log(event.target.id)
+  event.dataTransfer.setData("text", event.target.id);
+}
+
+/**
  * Return individual card elements
  */
 function getCardElement(card, update=false) {
@@ -58,6 +67,10 @@ function getCardElement(card, update=false) {
   cardTemplate.dataset['categoryId'] = card.columnId;
   cardTemplate.dataset['cardId'] = card.id;
   cardTemplate.classList.add('card-element');
+  cardTemplate.draggable = true;
+  cardTemplate.addEventListener('dragstart', function(event) {
+    dragCard(event);
+  });
   cardTemplate.innerHTML = `
     <div class="card-header">
       <div class="card-title">
