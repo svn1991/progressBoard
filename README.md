@@ -26,7 +26,7 @@ This page contains description and requirements for a Front-End assignment on [W
    - modify a card :heavy_check_mark:,
    - delete a card :heavy_check_mark:,
    - add a column :heavy_check_mark:,
-   - modify a column,
+   - modify a column :heavy_check_mark:,
    - delete a column,
    - search for any keywords presents on one or multiple cards. The view should update without reloading the whole page,
    - drag and drop a card from one column to another,

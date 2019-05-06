@@ -112,3 +112,23 @@ function updateCard(card) {
     }
   });
 }
+
+/**
+ * Update category object
+ * @param {object} category
+ */
+function updateCategory(category) {
+  return $.ajax({
+    type: 'PUT',
+    url: '/columns/'+category.id,
+    data: JSON.stringify(category),
+    contentType: "application/json",
+    dataType: "json",
+    success: function() {
+      return category.id + ' updated';
+    },
+    error: function(err) {
+      return err + 'unable to update card';
+    }
+  });
+}

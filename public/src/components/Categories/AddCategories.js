@@ -81,6 +81,7 @@ function saveAddCategoryButtonClicked(formElement) {
   if (formElement) {
     formElement.addEventListener('submit', function(){
       event.preventDefault();
+      event.stopPropagation();
       let formData = $('#save-category-form') ? $('#save-category-form').serializeArray() : [];
       let formattedData = addNewCategoryInfo(formData);
       if (!newCardSaving) {

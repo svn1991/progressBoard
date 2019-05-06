@@ -14,12 +14,138 @@ function getCategoryElement(category, update=false) {
   categoryElement.id = "category-id-" + category.id;
   categoryElement.dataset['categoryId'] = category.id;
   categoryElement.innerHTML = `
-    <div class="category-title">${category.title}</div>
+    <div class="category-title-wrapper">
+      <div class="category-title-container">
+        <div class="category-title category-display-title" data-category-id="${category.id}">${category.title}</div>
+        <input class="category-input hidden" value=${category.title} name="category-title-input" placeholder="Enter a name" data-category-id="${category.id}" required />
+      </div>
+      <div class="category-actions-wrapper category-actions-${category.id}">
+        <div>
+          <i class='icons fas fa-times category-delete-action-button discard-category'></i>
+        </div>
+      </div>
+    </div>    
     <div class="cards-wrapper" data-category-id=${category.id} id="cards-category-${category.id}">
     </div>
   `;
+
+  switchCategoryTitleListener(categoryElement, category.id);
+  //deleteCategoryListener(category.id);
   return categoryElement;
 }
+
+/**
+ * Switch to input view to edit category title
+ * @param {number} categoryId 
+ */
+function switchCategoryTitleListener(element, categoryId) {
+  let title = element.getElementsByClassName('category-title')[0];
+  if (title) {
+    title.addEventListener('click', function(event){
+      event.preventDefault();
+
+      // prevent category name change if a card is being edited
+      if (document.getElementsByClassName('editing-card').length > 0 || document.getElementsByClassName('editing-in-progress').length > 0) {
+        return;
+      }
+
+      let activeInput = $('.category-input:not(.hidden)');
+      if (activeInput.length === 1) {
+        if (activeInput.data('categoryId') != event.target.dataset[categoryId]) {
+          saveCategoryTitleInInput();
+        }
+      }
+
+      let input = element.getElementsByClassName('category-input')[0];
+      let actionButton = element.getElementsByClassName('category-actions-wrapper')[0];
+      
+      if (input && actionButton) {
+        title.classList.add('hidden');
+        actionButton.classList.add('hidden');
+        input.value = categoryKeyValue[categoryId].title;
+        input.classList.remove('hidden');
+      }
+    });  
+  }
+}
+
+/**
+ * Listener to check if category input requires saving
+ */
+function addListenerForCategoryInput() {
+  document.addEventListener('click', function(event){
+    console.log(event.target.classList);
+    
+    // ignore when clicked element has class category-title
+    if (event.target.classList.contains('category-title')) {
+      return;
+    }
+
+    // ignore when clicked element is an active category input
+    if (event.target.classList.contains('category-input') && !event.target.classList.contains('hidden')) {
+      return;
+    }
+
+    saveCategoryTitleInInput();
+  }); 
+}
+
+/**
+ * Update Category Title of any column input which is active
+ * @param {} activeInput 
+ * @param {*} categoryId 
+ */
+function saveCategoryTitleInInput() {
+  // if input is not hidden
+  let activeInput = $('.category-input:not(.hidden)');
+
+  if (activeInput.length === 1) {
+
+    // for each input save the value
+    const categoryId = activeInput.data('categoryId');
+    const category = categoryKeyValue[categoryId]
+    if (activeInput.val() && category && category.title !== activeInput.val()) {
+      updateCategory({
+        ...category,
+        title: activeInput.val()
+      })
+      .then(function(msg) {
+        return updateCategoryDetails()
+        .then(function(){
+          switchToDisplayCategory(activeInput, categoryId);
+        })
+        .fail(function(){
+
+        });
+      })
+      .fail(function(err){
+        console.log(err);
+      });
+    } else {
+      switchToDisplayCategory(activeInput, categoryId);
+    }
+  }
+}
+
+/**
+ * Switch to display category name instead of input
+ * @param {object} input jquery input element
+ * @param {number} categoryId 
+ */
+function switchToDisplayCategory(activeInput, categoryId) {
+  activeInput.addClass('hidden');
+  activeInput.val(categoryKeyValue[categoryId].title);
+  const categoryTitle = activeInput.siblings('.category-title');
+  if (categoryTitle) {
+    categoryTitle.text(categoryKeyValue[categoryId].title);
+    categoryTitle.removeClass('hidden');
+    const actionWrapper = $('.category-actions-'+categoryId);
+    if (actionWrapper) {
+      actionWrapper.removeClass('hidden');
+    }
+  }
+}
+
 /**
  * When category info is received, create category html
  */
@@ -38,6 +164,8 @@ function createCategories() {
       console.log('Could not find cards-wrapper element for Category ' + category.id + '.');
     }
   }
+
+  addListenerForCategoryInput();
 }
 
 /**
