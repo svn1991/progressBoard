@@ -63,6 +63,13 @@
   background-color: #e8e8e8;
 }
 
+.category-deletion-wrapper {
+    margin: 20px 10px 10px;
+    padding: 10px 10px 5px;
+    background-color: #fdf39b;
+    border-radius: 3px;
+}
+
 /*  STYLING FOR CATEGORY WITH INPUTS   */
 
 .add-category-button {
@@ -93,6 +100,7 @@
   width: 220px;
 }
 
+.category-deletion-controls,
 .category-save-wrapper {
   margin: 20px;
   display: flex;
@@ -101,6 +109,7 @@
   height: 50px;
 }
 
+.category-deletion-controls>div,
 .category-save-wrapper>div {
   width: 50px;
   height: 50px;
@@ -109,10 +118,12 @@
   align-items: center;
 }
 
+.category-deletion-controls>div:first-child,
 .category-save-wrapper>div:first-child {  
   margin-right: 20px;
 }
 
+.category-deleting-action-button,
 .category-save-action-button {
   width: 45px;
   height: 45px;
@@ -124,6 +135,7 @@
   outline: none;
 }
 
+.category-deleting-action-button.fa-check,
 .save-category {
   background-color: #61ff61;
   font-size: 1.8em;
@@ -131,10 +143,12 @@
   box-shadow: 0px 1px 0px 2px #009700;
 }
 
+.category-deleting-action-button.fa-check:hover,
 .save-category:hover {
   background-color: #0ad90a;
 }
 
+.category-deleting-action-button.fa-check:active,
 .save-category:active {
   background-color: #009700;
   box-shadow: none;
@@ -142,16 +156,19 @@
   width: 47px;
 }
 
+.category-deleting-action-button.fa-times,
 .discard-category {
   background-color: #fe5a78;
   font-size: 1.6em;
   box-shadow: 0px 1px 0px 2px #d90a30;
 }
 
+.category-deleting-action-button.fa-times:hover,
 .discard-category:hover {
   background-color: #ff002f;
 }
 
+.category-deleting-action-button.fa-times:active,
 .discard-category:active {
   background-color: #ea2e51;
   box-shadow: none;

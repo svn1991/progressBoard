@@ -132,3 +132,20 @@ function updateCategory(category) {
     }
   });
 }
+
+/**
+ * Delete category based on id
+ * @param {number} categoryId 
+ */
+function deleteCategory(categoryId) {
+  return $.ajax({
+    type: 'DELETE',
+    url: '/columns/'+categoryId,
+    success: function() {
+      return categoryId+ ' deleted';
+    },
+    error: function(err) {
+      return err + 'unable to delete category ' + categoryId;
+    }
+  });
+}

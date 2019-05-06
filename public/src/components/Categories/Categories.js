@@ -14,7 +14,7 @@ function getCategoryElement(category, update=false) {
   categoryElement.id = "category-id-" + category.id;
   categoryElement.dataset['categoryId'] = category.id;
   categoryElement.innerHTML = `
-    <div class="category-title-wrapper">
+    <div class="category-title-wrapper category-title-wrapper-${category.id}">
       <div class="category-title-container">
         <div class="category-title category-display-title" data-category-id="${category.id}">${category.title}</div>
         <input class="category-input hidden" value=${category.title} name="category-title-input" placeholder="Enter a name" data-category-id="${category.id}" required />
@@ -24,13 +24,23 @@ function getCategoryElement(category, update=false) {
           <i class='icons fas fa-times category-delete-action-button discard-category'></i>
         </div>
       </div>
-    </div>    
-    <div class="cards-wrapper" data-category-id=${category.id} id="cards-category-${category.id}">
-    </div>
+    </div>  
+    <div class="category-deletion-wrapper hidden category-delete-${category.id}">
+      <div class="warning-msg">Confirm deletion of category?</span>?</div>
+      <div class="category-deletion-controls">
+        <div>
+          <i class='icons fas fa-check category-deleting-action-button save-card'></i>
+        </div>
+        <div>
+          <i class='icons fas fa-times category-deleting-action-button discard-card'></i>
+        </div>
+      </div>
+    </div>  
+    <div class="cards-wrapper" data-category-id=${category.id} id="cards-category-${category.id}"></div>
   `;
 
   switchCategoryTitleListener(categoryElement, category.id);
-  //deleteCategoryListener(category.id);
+  deleteCategoryListener(categoryElement, category.id);
   return categoryElement;
 }
 
@@ -45,7 +55,11 @@ function switchCategoryTitleListener(element, categoryId) {
       event.preventDefault();
 
       // prevent category name change if a card is being edited
-      if (document.getElementsByClassName('editing-card').length > 0 || document.getElementsByClassName('editing-in-progress').length > 0) {
+      if (
+        document.getElementsByClassName('editing-card').length > 0 || 
+        document.getElementsByClassName('editing-in-progress').length > 0 ||
+        document.getElementsByClassName('adding-category-in-progress').length > 0
+      ) {
         return;
       }
 
