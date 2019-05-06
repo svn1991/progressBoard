@@ -42,6 +42,7 @@ function addCategoryButtonClicked() {
   categoryButton.classList.add('hidden');
   let addCategoryForm = document.getElementById('add-category-form-wrapper');
   addCategoryForm.classList.remove('hidden');
+  addCategoryForm.classList.add('adding-category-in-progress');
 }
 
 /**
@@ -114,6 +115,7 @@ function resetAddCategory() {
   categoryButton.classList.remove('hidden');
   let addCategoryForm = document.getElementById('add-category-form-wrapper');
   addCategoryForm.classList.add('hidden');
+  addCategoryForm.classList.remove('adding-category-in-progress');
   let categoryAddInput = document.getElementById('category-title-input');
   categoryAddInput.value = "";
 }

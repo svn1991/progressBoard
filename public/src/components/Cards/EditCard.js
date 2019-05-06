@@ -9,10 +9,7 @@ function setEditCardListener(cardTemplate, cardId) {
     editElem.addEventListener(
       'click',
       function(event) {
-        if (
-        document.getElementsByClassName('editing-card').length === 0 &&
-        document.getElementsByClassName('editing-in-progress').length === 0
-        ) {
+        if (isActivtityInProgress()) {
           let card = cardKeyValue[cardId];
           if (card && card.id) {
             cardTemplate.classList.add('editing-in-progress');

@@ -126,7 +126,9 @@ function createCards() {
     let cardCategoryId = "cards-category-"+cardDetails[i].columnId;
     let categoryElement = document.getElementById(cardCategoryId);
 
-    categoryElement.appendChild(cardElement);
+    if (categoryElement) {
+      categoryElement.appendChild(cardElement);
+    }
   }
 }
 
