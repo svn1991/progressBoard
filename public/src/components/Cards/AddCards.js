@@ -44,7 +44,7 @@ function addCardButtonClicked(categoryIndex, event) {
         }
       }
     } else {
-      
+      notifyUserOnActions();
     }
   }
 }
@@ -141,6 +141,7 @@ function resetAddCard () {
   let editingCard = document.getElementsByClassName('editing-card')[0];
   if (editingCard) {
     editingCard.classList.remove('editing-card');
+    notifyUserOnActions();
     editingCard.firstElementChild.classList.remove('hidden');
     editingCard.lastElementChild.innerHTML = "";
     editingCard.lastElementChild.classList.add('hidden');
