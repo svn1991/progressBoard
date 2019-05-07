@@ -45,7 +45,7 @@ function setSaveEditCardListener(cardTemplate, cardId) {
       if (titleInput && textarea && card && card.id) {
         card.title = titleInput.value;
         card.description = textarea.value;
-        if (isCardNameDuplicate(card.title)){
+        if (card.title !== cardKeyValue[cardId].title && isCardNameDuplicate(card.title)){
           const errorElement = cardTemplate.getElementsByClassName('edit-card-warning')[0];
           if (errorElement) {
             errorElement.innerText = "Please enter a unique card title";
