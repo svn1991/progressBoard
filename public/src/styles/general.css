@@ -25,3 +25,9 @@ h1 {
 .grey-out {
   color:#a8565685;
 }
+
+.error-msg{
+  color: #e90606;
+  font-weight: bold;
+  font-size: 15px;
+}

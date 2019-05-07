@@ -9,7 +9,7 @@ function setEditCardListener(cardTemplate, cardId) {
     editElem.addEventListener(
       'click',
       function(event) {
-        if (isActivtityInProgress()) {
+        if (!isActivtityInProgress()) {
           let card = cardKeyValue[cardId];
           if (card && card.id) {
             cardTemplate.classList.add('editing-in-progress');
@@ -43,26 +43,34 @@ function setSaveEditCardListener(cardTemplate, cardId) {
       if (titleInput && textarea && card && card.id) {
         card.title = titleInput.value;
         card.description = textarea.value;
-        updateCard(card)
-        .then(function(msg) {
-          console.log(msg);
-          return updateCardsDetails('update')
-            .then(function(updateLocalData) {
-              updateCardElement(card.id);
-              return updateLocalData;
-            })
-            .fail(function(err) {
-              return err;
-            });
-        })
-        .fail(function(err) {
-          console.log(err);
-        })
-        .always(function() {
-          cardTemplate.classList.remove('editing-in-progress');
-          $(cardTemplate).find('.card-editing-wrapper').addClass('hidden');
-          $(cardTemplate).find('.card-display-wrapper').removeClass('hidden');
-        });
+        if (isCardNameDuplicate(card.title)){
+          const errorElement = cardTemplate.getElementsByClassName('edit-card-warning')[0];
+          if (errorElement) {
+            errorElement.innerText = "Please enter a unique card title";
+          }
+        } else {
+          updateCard(card)
+          .then(function(msg) {
+            console.log(msg);
+            return updateCardsDetails('update')
+              .then(function(updateLocalData) {
+                updateCardElement(card.id);
+                return updateLocalData;
+              })
+              .fail(function(err) {
+                return err;
+              });
+          })
+          .fail(function(err) {
+            console.log(err);
+          })
+          .always(function() {
+            cardTemplate.classList.remove('editing-in-progress');
+            $(cardTemplate).find('.card-editing-wrapper').addClass('hidden');
+            $(cardTemplate).find('.card-display-wrapper').removeClass('hidden');
+          });
+        }
+        
       }
     });
   }
@@ -88,6 +96,7 @@ function setResetEditCardListener(cardTemplate, cardId) {
 
         cardTemplate.classList.remove('editing-in-progress');
         $(cardTemplate).find('.card-editing-wrapper').addClass('hidden');
+        $(cardTemplate).find('.card-editing-wrapper .edit-card-warning').html('');
         $(cardTemplate).find('.card-display-wrapper').removeClass('hidden');
       }
     });

@@ -11,7 +11,7 @@ function deleteCategoryListener(categoryElement, categoryId) {
     let initialDelete = initialDeleteWrapper.getElementsByClassName('discard-category')[0];
     if (initialDelete){
       initialDelete.addEventListener('click', function(event) {
-        if (isActivtityInProgress()) {
+        if (!isActivtityInProgress()) {
           titleWrapper.classList.add('hidden');
           deleteWrapper.classList.remove('hidden');
           initialDeleteWrapper.classList.add('adding-category-in-progress');

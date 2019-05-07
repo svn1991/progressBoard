@@ -2,6 +2,15 @@ let categoryDetails = [];
 let categoryKeyValue = {};
 
 /**
+ * Check if any category in records have same name
+ * @param {string} categoryName 
+ */
+function isCategoryNameDuplicate(categoryName) {
+  const categories = categoryDetails.filter((catInfo)=>catInfo.title === categoryName);
+  return categories.length;
+}
+
+/**
  * Allow card to be dropped into other categories
  * @param {object} event 
  */
@@ -63,6 +72,7 @@ function getCategoryElement(category, update=false) {
       <div class="category-title-container">
         <div class="category-title category-display-title" data-category-id="${category.id}">${category.title}</div>
         <input class="category-input hidden" value=${category.title} name="category-title-input" placeholder="Enter a name" data-category-id="${category.id}" required />
+        <div class="category-edit-warning error-msg"></div>
       </div>
       <div class="category-actions-wrapper category-actions-${category.id}">
         <div>
@@ -111,14 +121,12 @@ function switchCategoryTitleListener(element, categoryId) {
     title.addEventListener('click', function(event){
       event.preventDefault();
 
-      // prevent category name change if a card is being edited
-      if (
-        document.getElementsByClassName('editing-card').length > 0 || 
-        document.getElementsByClassName('editing-in-progress').length > 0 ||
-        document.getElementsByClassName('adding-category-in-progress').length > 0
-      ) {
+      // prevent category name change if a card/category is being edited
+      if (isActivtityInProgress()) {
         return;
       }
+
+      element.classList.add('editing-category-in-progress');
 
       let activeInput = $('.category-input:not(.hidden)');
       if (activeInput.length === 1) {
@@ -145,7 +153,6 @@ function switchCategoryTitleListener(element, categoryId) {
  */
 function addListenerForCategoryInput() {
   document.addEventListener('click', function(event){
-    console.log(event.target.classList);
     
     // ignore when clicked element has class category-title
     if (event.target.classList.contains('category-title')) {
@@ -174,24 +181,31 @@ function saveCategoryTitleInInput() {
 
     // for each input save the value
     const categoryId = activeInput.data('categoryId');
-    const category = categoryKeyValue[categoryId]
+    const category = categoryKeyValue[categoryId];
     if (activeInput.val() && category && category.title !== activeInput.val()) {
-      updateCategory({
-        ...category,
-        title: activeInput.val()
-      })
-      .then(function(msg) {
-        return updateCategoryDetails()
-        .then(function(){
-          switchToDisplayCategory(activeInput, categoryId);
+      if (isCategoryNameDuplicate(activeInput.val())){
+        const errorElement = activeInput.siblings('.category-edit-warning');
+        if (errorElement.length === 1) {
+          errorElement.html("Please enter a unique category title");
+        }
+      } else {
+        updateCategory({
+          ...category,
+          title: activeInput.val()
         })
-        .fail(function(){
+        .then(function(msg) {
+          return updateCategoryDetails()
+          .then(function(){
+            switchToDisplayCategory(activeInput, categoryId);
+          })
+          .fail(function(){
 
-        });
-      })
-      .fail(function(err){
-        console.log(err);
-      });
+          });
+        })
+        .fail(function(err){
+          console.log(err);
+        });  
+      }          
     } else {
       switchToDisplayCategory(activeInput, categoryId);
     }
@@ -206,6 +220,7 @@ function saveCategoryTitleInInput() {
 function switchToDisplayCategory(activeInput, categoryId) {
   activeInput.addClass('hidden');
   activeInput.val(categoryKeyValue[categoryId].title);
+  activeInput.siblings('.category-edit-warning').html('');
   const categoryTitle = activeInput.siblings('.category-title');
   if (categoryTitle) {
     categoryTitle.text(categoryKeyValue[categoryId].title);
@@ -213,6 +228,11 @@ function switchToDisplayCategory(activeInput, categoryId) {
     const actionWrapper = $('.category-actions-'+categoryId);
     if (actionWrapper) {
       actionWrapper.removeClass('hidden');
+    }
+
+    const element = document.getElementById('category-id-'+categoryId);
+    if (element) {
+      element.classList.remove('editing-category-in-progress');
     }
   }
 }

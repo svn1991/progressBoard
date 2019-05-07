@@ -14,10 +14,10 @@ This page contains description and requirements for a Front-End assignment on [W
 
 ### Requirements
 
-1. Create a public github repository
-2. You solution should use **only [Web Components](https://www.webcomponents.org/introduction)** aside from vanilla HTML, CSS and JS. No frameworks or external libraries can be used for the application itself. However, external frameworks are allowed for tests.
-3. You should consume the data of the fake API provided in this repository (see section 'Materials' below). 
-4. Create a single page that lists all columns with their respective cards.
+1. Create a public github repository :heavy_check_mark:
+2. You solution should use **only [Web Components](https://www.webcomponents.org/introduction)** aside from vanilla HTML, CSS and JS. No frameworks or external libraries can be used for the application itself. However, external frameworks are allowed for tests :heavy_check_mark:.
+3. You should consume the data of the fake API provided in this repository (see section 'Materials' below) :heavy_check_mark:. 
+4. Create a single page that lists all columns with their respective cards :heavy_check_mark:.
    - Each column is defined by a title and the cards it contains,
    - Each card is defined by a mandatory title, an optional description and the column that it belongs to.
 5. The user should be able to:
@@ -29,9 +29,9 @@ This page contains description and requirements for a Front-End assignment on [W
    - modify a column :heavy_check_mark:,
    - delete a column :heavy_check_mark:,
    - search for any keywords presents on one or multiple cards. The view should update without reloading the whole page,
-   - drag and drop a card from one column to another,
-   - click on a card to see its description. The description should be in the same view and extend the card container. It should **not** open in another page or popup/modal.
-6. Cards and columns should be unique (i.e we should not see 2 cards or 2 columns with the same title).
+   - drag and drop a card from one column to another :heavy_check_mark:,
+   - click on a card to see its description. The description should be in the same view and extend the card container. It should **not** open in another page or popup/modal :heavy_check_mark:.
+6. Cards and columns should be unique (i.e we should not see 2 cards or 2 columns with the same title):heavy_check_mark:.
 
 ### Specification
 
