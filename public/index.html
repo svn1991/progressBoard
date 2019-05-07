@@ -5,8 +5,10 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="src/styles/reset.css">
     <link rel="stylesheet" type="text/css" href="src/styles/general.css">
+    <link rel="stylesheet" type="text/css" href="src/components/Search/search.css">
     <link rel="stylesheet" type="text/css" href="src/components/Cards/cards.css">
     <link rel="stylesheet" type="text/css" href="src/components/Categories/categories.css">
+    <link rel="stylesheet" type="text/css" href="src/components/App/app.css">
 
     <!-- COMMON -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -14,46 +16,30 @@
     <script src="src/common/data.js"></script>
 
     <!-- COMPONENTS -->
+    <script src="src/components/Search/Search.js"></script>
     <script src="src/components/Cards/AddCards.js"></script>
     <script src="src/components/Cards/EditCard.js"></script>
     <script src="src/components/Cards/Cards.js"></script>
     <script src="src/components/Categories/AddCategories.js"></script>
     <script src="src/components/Categories/DeleteCategories.js"></script>
     <script src="src/components/Categories/Categories.js"></script>
+    <script src="src/components/App/App.js"></script>
   </head>
   <body>
     <div>
-      <div class="project-title">
-        <h1>Project Name</h1>
+      <div class="header">
+        <div class="project-title">
+          <h1>Project Name</h1>
+        </div>
+        <div class="search-container" id="search-container"></div>
       </div>
-      <div id="progress-categories-wrapper"></div>
+      <div id="progress-categories-wrapper">
+          <div id="actions-notification"></div>
+          <div id="categories-container"></div>
+      </div>
     </div>
     <script>
-      /**
-       * Setting up the categories html template
-       */
-      const progressCategoriesTemplate = document.createElement('div');
-      progressCategoriesTemplate.id = 'progressCategories-template';
-      progressCategoriesTemplate.innerHTML = 
-      `
-        <div id="categories-container"></div>
-      `;
-
-      /**
-       * Adding template to 'body'
-       */
-      const categoriesWrapper = document.getElementById('progress-categories-wrapper');
-      categoriesWrapper.innerHTML = progressCategoriesTemplate.innerHTML;
-      const categoriesContainer = document.getElementById('categories-container');
-
-      loadCategories('firstLoad')
-      .then(function() {
-        categoriesContainer.appendChild(getAddCategoryWrapper());
-        console.log('add new column button done')
-      })
-      .fail(function(err) {
-        console.log(err);
-      });
+      setupApp();
     </script>
   </body>
 </html>

@@ -123,6 +123,7 @@ function switchCategoryTitleListener(element, categoryId) {
 
       // prevent category name change if a card/category is being edited
       if (isActivtityInProgress()) {
+        notifyUserOnActions();
         return;
       }
 
@@ -153,7 +154,6 @@ function switchCategoryTitleListener(element, categoryId) {
  */
 function addListenerForCategoryInput() {
   document.addEventListener('click', function(event){
-    
     // ignore when clicked element has class category-title
     if (event.target.classList.contains('category-title')) {
       return;
@@ -233,6 +233,7 @@ function switchToDisplayCategory(activeInput, categoryId) {
     const element = document.getElementById('category-id-'+categoryId);
     if (element) {
       element.classList.remove('editing-category-in-progress');
+      notifyUserOnActions();
     }
   }
 }
@@ -263,6 +264,7 @@ function createCategories() {
  * Add category element to DOM
  */
 function addCategory(categoryElement) {
+  const categoriesContainer = document.getElementById('categories-container');
   categoriesContainer.appendChild(categoryElement);
 }
 
@@ -317,6 +319,7 @@ function loadCategories(status) {
   })
   .fail(function (err) {
     console.log(status + 'fail of category add');
+    const categoriesContainer = document.getElementById('categories-container');
     categoriesContainer.innerHTML = 
     `
       <div> Sorry, categories cant be loaded. Please contact administrator. </div>

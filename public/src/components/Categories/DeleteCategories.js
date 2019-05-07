@@ -15,6 +15,8 @@ function deleteCategoryListener(categoryElement, categoryId) {
           titleWrapper.classList.add('hidden');
           deleteWrapper.classList.remove('hidden');
           initialDeleteWrapper.classList.add('adding-category-in-progress');
+        } else {
+          notifyUserOnActions();
         }        
       });
 
@@ -24,6 +26,7 @@ function deleteCategoryListener(categoryElement, categoryId) {
       if (confirmDeletion) {
         confirmDeletion.addEventListener('click', function (){
           runDeleteCategory(categoryId);
+          notifyUserOnActions();
         });
       }
 
@@ -32,6 +35,7 @@ function deleteCategoryListener(categoryElement, categoryId) {
           titleWrapper.classList.remove('hidden');
           deleteWrapper.classList.add('hidden');
           initialDeleteWrapper.classList.remove('adding-category-in-progress');
+          notifyUserOnActions();
         });
       }
     }

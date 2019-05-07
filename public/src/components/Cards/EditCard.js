@@ -16,6 +16,8 @@ function setEditCardListener(cardTemplate, cardId) {
             $(cardTemplate).find('.card-display-wrapper').addClass('hidden');
             $(cardTemplate).find('.card-editing-wrapper').removeClass('hidden');          
           }
+        } else {
+          notifyUserOnActions();
         }
       }
     );
@@ -43,7 +45,7 @@ function setSaveEditCardListener(cardTemplate, cardId) {
       if (titleInput && textarea && card && card.id) {
         card.title = titleInput.value;
         card.description = textarea.value;
-        if (isCardNameDuplicate(card.title)){
+        if (card.title !== cardKeyValue[cardId].title && isCardNameDuplicate(card.title)){
           const errorElement = cardTemplate.getElementsByClassName('edit-card-warning')[0];
           if (errorElement) {
             errorElement.innerText = "Please enter a unique card title";
@@ -68,6 +70,7 @@ function setSaveEditCardListener(cardTemplate, cardId) {
             cardTemplate.classList.remove('editing-in-progress');
             $(cardTemplate).find('.card-editing-wrapper').addClass('hidden');
             $(cardTemplate).find('.card-display-wrapper').removeClass('hidden');
+            notifyUserOnActions();
           });
         }
         
@@ -95,6 +98,7 @@ function setResetEditCardListener(cardTemplate, cardId) {
         textarea.value = card.description;
 
         cardTemplate.classList.remove('editing-in-progress');
+        notifyUserOnActions();
         $(cardTemplate).find('.card-editing-wrapper').addClass('hidden');
         $(cardTemplate).find('.card-editing-wrapper .edit-card-warning').html('');
         $(cardTemplate).find('.card-display-wrapper').removeClass('hidden');
