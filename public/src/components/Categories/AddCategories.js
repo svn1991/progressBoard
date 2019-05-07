@@ -125,6 +125,7 @@ function resetAddCategory() {
   addCategoryForm.classList.add('hidden');
   document.getElementById('add-category-input-error').innerText = '';
   addCategoryForm.classList.remove('adding-category-in-progress');
+  notifyUserOnActions();
   let categoryAddInput = document.getElementById('category-title-input');
   categoryAddInput.value = "";
 }
