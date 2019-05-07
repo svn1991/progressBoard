@@ -27,6 +27,7 @@
 .category-title-container {
   width: 80%;
   margin-right: 20px;
+  margin-bottom: 20px;
 }
 
 .category-title-container .category-input {
@@ -37,7 +38,7 @@
   background-color: #ffffff;
   color: #000000;
   padding: 10px 0 10px 10px;
-  margin: 12px 0 29px 10px;
+  margin: 12px 0 0 10px;
   line-height: 0;
   width: 100%;
 }
@@ -98,6 +99,15 @@
   padding: 10px 0 10px 10px;
   margin: 12px 0 0 10px;
   width: 220px;
+  line-height: 0;
+}
+
+#add-category-input-error {
+  margin: 5px 15px;
+}
+
+.category-edit-warning {
+  margin: 5px 0 0 15px;
 }
 
 .category-deletion-controls,

@@ -58,6 +58,7 @@ function getAddCategoryFormTemplate() {
   categoryForm.id = 'save-category-form';
   categoryForm.innerHTML = `
     <input id="category-title-input" name="title" value="" placeholder="Category Name" required />
+    <div id="add-category-input-error" class="error-msg"></div>
     <div class="category-save-wrapper">
       <div>
         <input type="submit" value="&#xf0c7;" name="submit" class="icons fas fa-save save-category category-save-action-button" />
@@ -85,26 +86,33 @@ function saveAddCategoryButtonClicked(formElement) {
       event.stopPropagation();
       let formData = $('#save-category-form') ? $('#save-category-form').serializeArray() : [];
       let formattedData = addNewCategoryInfo(formData);
-      if (!newCardSaving) {
-        newCategorySaving = true;
-        return addCategoryToDatabase(formattedData)
-        .then(function(msg){
-          console.log(msg);
-          return loadCategories('newCategoryAdded')
+      if (isCategoryNameDuplicate(formattedData.title)){
+        const errorElement = document.getElementById('add-category-input-error');
+        if (errorElement) {
+          errorElement.innerText = "Please enter a unique category title";
+        }
+      } else {
+        if (!newCardSaving) {
+          newCategorySaving = true;
+          return addCategoryToDatabase(formattedData)
           .then(function(msg){
-            resetAddCategory();
             console.log(msg);
+            return loadCategories('newCategoryAdded')
+            .then(function(msg){
+              resetAddCategory();
+              console.log(msg);
+            })
+            .fail(function(err) {
+              console.log(err);
+            });
           })
           .fail(function(err) {
             console.log(err);
+          })
+          .always(function() {
+            newCategorySaving = false;
           });
-        })
-        .fail(function(err) {
-          console.log(err);
-        })
-        .always(function() {
-          newCategorySaving = false;
-        });
+        }
       }
     });
   }
@@ -115,6 +123,7 @@ function resetAddCategory() {
   categoryButton.classList.remove('hidden');
   let addCategoryForm = document.getElementById('add-category-form-wrapper');
   addCategoryForm.classList.add('hidden');
+  document.getElementById('add-category-input-error').innerText = '';
   addCategoryForm.classList.remove('adding-category-in-progress');
   let categoryAddInput = document.getElementById('category-title-input');
   categoryAddInput.value = "";
