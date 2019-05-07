@@ -33,7 +33,7 @@ function addCardButtonClicked(categoryIndex, event) {
   if (event) {
     // ensure that no new card in a another category is being edited
     // ensure that no other cards are being updated
-    if (isActivtityInProgress()) {
+    if (!isActivtityInProgress()) {
       if (event.target && event.target.firstElementChild) {
         event.target.classList.add('editing-card');
         event.target.firstElementChild.classList.add('hidden');
@@ -86,27 +86,34 @@ function setListenerForSavingNewCard(formElement) {
         event.stopPropagation();
         let formData = $('#save-card-form') ? $('#save-card-form').serializeArray() : [];
         let formattedData = addNewCardInfo(formData);
-        if (!newCardSaving) {
-          newCardSaving = true;
-          return addCardToDatabase(formattedData)
-          .then(function(msg){
-            console.log(msg);
-            return loadCards('newCardAdded')
+        if (isCardNameDuplicate(formattedData.title)){
+          const errorElement = document.getElementById('add-card-input-error');
+          if (errorElement) {
+            errorElement.innerText = "Please enter a unique card title";
+          }
+        } else {
+          if (!newCardSaving) {
+            newCardSaving = true;
+            return addCardToDatabase(formattedData)
             .then(function(msg){
-              resetAddCard();
               console.log(msg);
+              return loadCards('newCardAdded')
+              .then(function(msg){
+                resetAddCard();
+                console.log(msg);
+              })
+              .fail(function(err) {
+                console.log(err);
+              });
             })
             .fail(function(err) {
               console.log(err);
+            })
+            .always(function() {
+              newCardSaving = false;
             });
-          })
-          .fail(function(err) {
-            console.log(err);
-          })
-          .always(function() {
-            newCardSaving = false;
-          });
-        } 
+          } 
+        }
         console.log('newcardsaving is true')       
         return false;
       }
@@ -147,16 +154,17 @@ function resetAddCard () {
  * @return {object} dom element template
  */
 function addCard(categoryIndex) {
-  let editDiv = document.createElement('div');
-  editDiv.dataset['categoryId']= categoryIndex;
-  editDiv.classList.add('edit-card-element');
+  let addDiv = document.createElement('div');
+  addDiv.dataset['categoryId']= categoryIndex;
+  addDiv.classList.add('edit-card-element');
 
-  editDiv.innerHTML = `
+  addDiv.innerHTML = `
     <form id="save-card-form">
       <div class="card-header">
         <div class="card-title">
           <input type="text" name="title" value="" placeholder="Card Name" required/>
           <input type="hidden" name="columnId" value="${categoryIndex}" />
+          <div id="add-card-input-error" class="error-msg"></div>
         </div>
       </div>
       <div class="card-description">
@@ -177,9 +185,9 @@ function addCard(categoryIndex) {
     </form>      
   `;
 
-  setListenerForSavingNewCard(editDiv.getElementsByTagName('form')[0]);
-  setListenerForDiscardingNewCard(editDiv.getElementsByClassName('discard-card')[0]);
+  setListenerForSavingNewCard(addDiv.getElementsByTagName('form')[0]);
+  setListenerForDiscardingNewCard(addDiv.getElementsByClassName('discard-card')[0]);
 
-  return editDiv;
+  return addDiv;
 }
 

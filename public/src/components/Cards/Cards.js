@@ -2,6 +2,15 @@ let cardDetails = [];
 let cardKeyValue = {};
 
 /**
+ * Check if any card in records have same name
+ * @param {string} cardName 
+ */
+function isCardNameDuplicate(cardName) {
+  const cards = cardDetails.filter((cardInfo)=>cardInfo.title === cardName);
+  return cards.length;
+}
+
+/**
  * Listener added when card is to be removed
  * @param {object} element card element
  * @param {number} cardId card id to be deleted
@@ -83,6 +92,7 @@ function getCardElement(card, update=false) {
         </div>
         <div class="card-editing-wrapper hidden">
           <input type="text" name="title" value="${card.title}" placeholder="Card Name" required/>
+          <div class="edit-card-warning error-msg"></div>
         </div>
       </div>
     </div>

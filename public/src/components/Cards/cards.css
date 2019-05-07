@@ -87,6 +87,10 @@
   display: none;
 }
 
+.card-element .edit-card-warning {
+  color: #ffffff;
+}
+
 /*  STYLING FOR CARD WITH INPUTS   */
 .add-card-button {
   display: flex;
