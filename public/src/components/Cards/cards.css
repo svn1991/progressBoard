@@ -73,13 +73,18 @@
   color: #f60e25;
 }
 
-.card-description {
-  margin-top: 10px;
-}
-
 .card-element .card-description .card-display-wrapper {
   max-height: 0;
   overflow: hidden;
+}
+
+.card-element .card-description .card-display-wrapper.show-description {
+  max-height: 150px;
+  overflow: auto;
+}
+
+.card-element.editing-in-progress .card-description .description-logo {
+  display: none;
 }
 
 /*  STYLING FOR CARD WITH INPUTS   */

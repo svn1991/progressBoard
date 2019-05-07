@@ -87,9 +87,12 @@ function getCardElement(card, update=false) {
       </div>
     </div>
     <div class="card-description">
+      <span class="description-logo ${card.description ? '' : 'hidden'}">
+        <i class="fas fa-book-open"></i>
+      </span>
       <div class="card-display-wrapper">
-        <span class="display-card-fields ${!card.description ? 'grey-out' : ''}">
-          ${card.description ? card.description : 'No description'}
+        <span class="display-card-fields">
+          ${card.description ? card.description : ''}
         </span>
       </div>
       <div class="card-editing-wrapper hidden">
@@ -113,6 +116,9 @@ function getCardElement(card, update=false) {
     </div>
   `;
 
+  // enable toggling of description
+  setToggleDescriptionView(cardTemplate, card.id);
+
   // save changes made during editing of a card
   setSaveEditCardListener(cardTemplate, card.id);
 
@@ -125,6 +131,26 @@ function getCardElement(card, update=false) {
   // delete the card
   setDeleteCardListener(cardTemplate, card.id);
   return cardTemplate;
+}
+
+/**
+ * Clicking on card should toggle description view
+ */
+function setToggleDescriptionView(cardTemplate) {
+  cardTemplate.addEventListener('click',function(event){
+    if (!cardTemplate.classList.contains('editing-in-progress')){
+      if (!event.target.classList.contains('icons')) {
+        const display = $(cardTemplate).find('.card-description .card-display-wrapper');
+        if (display) {
+          if (display.hasClass('show-description')){
+            display.removeClass('show-description');
+          } else {
+            display.addClass('show-description');
+          }          
+        }
+      }
+    }
+  });
 }
 
 /**

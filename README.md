@@ -29,8 +29,8 @@ This page contains description and requirements for a Front-End assignment on [W
    - modify a column :heavy_check_mark:,
    - delete a column :heavy_check_mark:,
    - search for any keywords presents on one or multiple cards. The view should update without reloading the whole page,
-   - drag and drop a card from one column to another,
-   - click on a card to see its description. The description should be in the same view and extend the card container. It should **not** open in another page or popup/modal.
+   - drag and drop a card from one column to another :heavy_check_mark:,
+   - click on a card to see its description. The description should be in the same view and extend the card container. It should **not** open in another page or popup/modal :heavy_check_mark:.
 6. Cards and columns should be unique (i.e we should not see 2 cards or 2 columns with the same title).
 
 ### Specification

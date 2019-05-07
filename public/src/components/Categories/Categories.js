@@ -145,7 +145,6 @@ function switchCategoryTitleListener(element, categoryId) {
  */
 function addListenerForCategoryInput() {
   document.addEventListener('click', function(event){
-    console.log(event.target.classList);
     
     // ignore when clicked element has class category-title
     if (event.target.classList.contains('category-title')) {
