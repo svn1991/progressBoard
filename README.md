@@ -11,7 +11,7 @@
     ```
 3) Run "npm start"
     ```
-    npm i -g json-server
+    npm start
     ```
 4) Open browser (chrome preferably) and head over to http://localhost:3000/
 
