@@ -198,6 +198,9 @@ function updateCardsDetails(action) {
     if (cardsInfo.length > 0) {
       cardDetails = cardsInfo;
       createCardsKeyValue();
+      if (searchActivated) {
+        checkSearchResult();
+      }
       console.log(action + ' caused proper load of card details');
       return;
     } else {
